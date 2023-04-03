@@ -1,1 +1,1 @@
-# charts
+`helm repo add crash-tech https://crash-tech.github.io/charts/`
