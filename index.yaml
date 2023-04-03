@@ -3,12 +3,12 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-04-03T19:42:23.657946276+03:00"
+    created: "2023-04-03T20:53:43.048644685+03:00"
     description: proxmox-operator
-    digest: 0eb0be3c9ddbf2bfb346c1a933c2ae1f0cf43c361c51cad65f5016581c8ab2f2
+    digest: 09baa412a405b64d2243ade657b73610fb264c7fda7aef334a47e1703878854b
     name: proxmox-operator
     type: application
     urls:
     - proxmox-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2023-04-03T19:42:23.657085434+03:00"
+generated: "2023-04-03T20:53:43.04772932+03:00"
