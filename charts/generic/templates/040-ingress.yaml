@@ -39,4 +39,5 @@ spec:
                 port: {{ $path.backend.service.port | toYaml | nindent 18 }}
         {{- end }}
     {{- end }}
+---
 {{- end }}
