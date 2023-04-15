@@ -179,3 +179,10 @@
 #                     name: example-service
 #                     port:
 #                       number: 8080
+
+# extraManifests:
+#   - apiVersion: piraeus.io/v1
+#     kind: LinstorCluster
+#     metadata:
+#       name: linstorcluster
+#     spec: {}

@@ -2,7 +2,16 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2023-04-15T18:20:38.713084326+03:00"
+    created: "2023-04-15T18:29:29.413312356+03:00"
+    description: generic
+    digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
+    name: generic
+    type: application
+    urls:
+    - generic-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    created: "2023-04-15T18:29:29.41267222+03:00"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -13,12 +22,12 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-04-15T18:20:38.713923186+03:00"
+    created: "2023-04-15T18:29:29.414022525+03:00"
     description: proxmox-operator
-    digest: a5ce90a557fe40f38549a381c87055fc09295679df73bdbf93c5c0c311070b33
+    digest: 0069b5ea6a78a537c1edeb0d937329981c18b0985479ced63b42d42730384be0
     name: proxmox-operator
     type: application
     urls:
     - proxmox-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2023-04-15T18:20:38.699340373+03:00"
+generated: "2023-04-15T18:29:29.411709693+03:00"
