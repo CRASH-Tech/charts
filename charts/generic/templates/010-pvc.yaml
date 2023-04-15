@@ -1,0 +1,18 @@
+{{- range $pvc := $.Values.pvcs }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $pvc.name }}"
+  labels:
+    release: {{ printf "%s-%s" $.Release.Name $.Values.release.name }}
+    {{- range $k, $v := $pvc.labels }}
+    {{ $k }}: {{ tpl $v $ | quote}}
+    {{- end }}
+  {{- if $pvc.annotations }}
+  annotations:
+    {{- range $k, $v := $pvc.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec: {{ $pvc.spec | toYaml | nindent 2 }}
+{{- end }}

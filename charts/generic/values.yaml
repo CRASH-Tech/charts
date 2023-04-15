@@ -1,0 +1,181 @@
+# release:
+#   name: example-app
+#   type: deployment # deployment or statefulset
+#   replicaCount: 2
+#   timezone: Moscow
+#   strategy: # no need for sts
+#     type: RollingUpdate
+#   imagePullSecrets: # optional
+#     - name: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-registrysecret'
+#   labels: # optional
+#     example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#   annotations: # optional
+#     example-annotation: example-value
+#   hostNetwork: false # optional
+#   nodeSelector: # optional
+#     kubernetes.io/arch: amd64
+#     kubernetes.io/os: linux
+#   tolerations: # optional
+#     - key: node-role.kubernetes.io/master
+#       operator: Exists
+#       effect: NoSchedule
+#   volumes: # optional
+#     - name: nginx-cache
+#       emptyDir:
+#         sizeLimit: 500Mi
+#     - name: example-volume
+#       persistentVolumeClaim:
+#         claimName: example-volume
+#     - name: example-config
+#       configMap:
+#         name: example-config
+#     - name: example-secret
+#       secret:
+#         secretName: example-secret
+#     - name: host-volume
+#       hostPath:
+#         path: /data
+#         type: Directory
+#   volumeClaimTemplates: # no need for deployment
+#     - name: example-volume-template
+#       labels: # optional
+#         example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#       annotations: # optional
+#         example-annotation: example-value
+#       spec:
+#         accessModes: ["ReadWriteOnce"]
+#         storageClassName: ceph
+#         resources:
+#           requests:
+#             storage: 1Gi
+#   containers:
+#     - name: example-container
+#       image: nginxinc/nginx-unprivileged # "{{ $.Values.werf.image.example-image }}"
+#       pullPolicy: IfNotPresent # optional (default IfNotPresent)
+#       # command: '["nginx"]' # optional
+#       # args: '["-c", "/etc/nginx/nginx.conf"]' # optional
+#       env: # optional
+#         - name: LISTEN_PORT
+#           value: "8080"
+#       envFrom: # optional
+#         - configMapRef: # optional
+#             name: example-config
+#         - secretRef: # optional
+#             name: example-secret
+#       ports: # optional
+#         - name: http
+#           protocol: TCP
+#           containerPort: 8080
+#       volumeMounts:
+#         - name: nginx-cache
+#           mountPath: /var/cache/nginx
+#         # - name: example-volume
+#         #   mountPath: /tmp/cache
+#         # - name: example-volume-template
+#         #   mountPath: /tmp/cache2
+#         - name: example-config
+#           subPath: subconfig.yaml
+#           mountPath: /config.yaml
+#         - name: example-secret
+#           mountPath: /secret.yaml
+#       resources: # optional
+#         requests: # optional
+#           cpu: "1"
+#           memory: 128Mi
+#         limits: # optional
+#           cpu: "2"
+#           memory: 256Mi
+#       readinessProbe: # optional
+#         tcpSocket:
+#           port: 8080
+#         initialDelaySeconds: 5
+#         periodSeconds: 10
+#       livenessProbe: # optional
+#         tcpSocket:
+#           port: 8080
+#         initialDelaySeconds: 15
+#         periodSeconds: 20
+#       securityContext: # optional
+#         runAsUser: 1000
+#         runAsGroup: 1000
+# configmaps:
+#   - name: example-config
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       example-annotation: example-value
+#     data:
+#       EXAMPLE_KEY: "example-value"
+#       subconfig.yaml: |
+#         some: config
+#         instance: "{{ $.Values.global.instance }}"
+
+# secrets:
+#   - name: example-secret
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       example-annotation: example-value
+#     type: Opaque
+#     data:
+#       EXAMPLE_SECRET_KEY: "example-value"
+#       secret.yaml: |
+#         instance: "{{ $.Values.global.instance }}"
+
+# pvcs:
+#   - name: example-volume
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       example-annotation: example-value
+#     spec:
+#       accessModes:
+#         - ReadWriteOnce
+#       volumeMode: Filesystem
+#       resources:
+#         requests:
+#           storage: 1Gi
+#       storageClassName: ceph
+
+# services:
+#   - name: example-service
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       metallb.universe.tf/ip-allocated-from-pool: int
+#       metallb.universe.tf/allow-shared-ip: "somekey"
+#       external-dns.alpha.kubernetes.io/hostname: "{{ $.Values.global.ref }}-example-service.example.local"
+#     type: ClusterIP
+#     # sessionAffinity: None # optional
+#     # externalTrafficPolicy: Local # optional
+#     # loadBalancerIP: 10.171.124.2
+#     ports:
+#       - protocol: TCP
+#         port: 8080
+#         targetPort: 8080
+
+# ingresses:
+#   - name: example-ingress
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       kubernetes.io/ingress.class: int
+#       nginx.ingress.kubernetes.io/backend-protocol: HTTP
+#       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+#       example-annotation: example-value
+#     spec:
+#       tls:
+#         - hosts:
+#             - "{{ $.Values.global.ref }}-example-app.example.local"
+#           secretName: example.local
+#       rules:
+#         - host: "{{ $.Values.global.ref }}-example-app.example.local"
+#           http:
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#                 backend:
+#                   service:
+#                     name: example-service
+#                     port:
+#                       number: 8080

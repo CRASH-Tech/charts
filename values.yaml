@@ -1,0 +1,261 @@
+release:
+  name: powerdns
+  annotations:
+    commit/hash: "{{ $.Values.werf.commit.hash }}"
+  type: deployment
+  replicaCount: 1
+  timezone: Moscow
+  strategy:
+    type: RollingUpdate
+  tolerations:
+    - operator: Exists
+      effect: NoSchedule
+  volumes: # optional
+    # - name: nginx-cache
+    #   emptyDir:
+    #     sizeLimit: 500Mi
+    # - name: example-volume
+    #   persistentVolumeClaim:
+    #     claimName: example-volume
+    # - name: example-config
+    #   configMap:
+    #     name: example-config
+    - name: config
+      secret:
+        secretName: config
+  containers:
+    - name: recursor
+      image: powerdns/pdns-recursor-48:4.8.4
+      pullPolicy: IfNotPresent
+      # command: ["/bin/dd"]
+      # args: '["if=/dev/zero", "of=/dev/null"]'
+      command: ["/usr/local/sbin/pdns_recursor"]
+      args: ["--config-dir=/etc/powerdns/"]
+      ports:
+        - name: recursor-tcp
+          protocol: TCP
+          containerPort: 5301
+        - name: recursor-udp
+          protocol: UDP
+          containerPort: 5301
+        - name: recursor-http
+          protocol: TCP
+          containerPort: 8081
+      volumeMounts:
+        # - name: nginx-cache
+        #   mountPath: /var/cache/nginx
+        - name: config
+          mountPath: /etc/powerdns/recursor.conf
+          subPath: recursor.conf
+      resources:
+        requests:
+          cpu: "1"
+          memory: 128Mi
+        limits:
+          cpu: "2"
+          memory: 256Mi
+      # readinessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 10
+      # livenessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 15
+      #   periodSeconds: 20
+    - name: auth
+      image: powerdns/pdns-auth-47:4.7.3
+      pullPolicy: IfNotPresent
+      # command: ["/bin/dd"]
+      # args: '["if=/dev/zero", "of=/dev/null"]'
+      command: ["/usr/local/sbin/pdns_server"]
+      args: ["--config-dir=/etc/powerdns/"]
+      ports:
+        - name: auth-tcp
+          protocol: TCP
+          containerPort: 5302
+        - name: auth-udp
+          protocol: UDP
+          containerPort: 5302
+        - name: auth-http
+          protocol: TCP
+          containerPort: 8082
+      volumeMounts:
+        # - name: nginx-cache
+        #   mountPath: /var/cache/nginx
+        - name: config
+          mountPath: /etc/powerdns/pdns.conf
+          subPath: pdns.conf
+      resources:
+        requests:
+          cpu: "1"
+          memory: 128Mi
+        limits:
+          cpu: "2"
+          memory: 256Mi
+      # readinessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 10
+      # livenessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 15
+      #   periodSeconds: 20
+    - name: admin
+      image: ngoduykhanh/powerdns-admin:v0.3.0
+      pullPolicy: IfNotPresent
+      # command: ["/bin/dd"]
+      # args: '["if=/dev/zero", "of=/dev/null"]'
+      # command: ["/usr/local/sbin/pdns_server"]
+      # args: ["--config-dir=/etc/powerdns/"]
+      ports:
+        - name: auth-tcp
+          protocol: TCP
+          containerPort: 5302
+        - name: auth-udp
+          protocol: UDP
+          containerPort: 5302
+        - name: auth-http
+          protocol: TCP
+          containerPort: 8082
+      volumeMounts:
+        # - name: nginx-cache
+        #   mountPath: /var/cache/nginx
+        - name: config
+          mountPath: /etc/powerdns/pdns.conf
+          subPath: pdns.conf
+      resources:
+        requests:
+          cpu: "1"
+          memory: 128Mi
+        limits:
+          cpu: "2"
+          memory: 256Mi
+      # readinessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 10
+      # livenessProbe:
+      #   tcpSocket:
+      #     port: 5301
+      #   initialDelaySeconds: 15
+      #   periodSeconds: 20
+
+secrets:
+  - name: config
+    type: Opaque
+    data:
+      recursor.conf: |
+        local-address=0.0.0.0
+        local-port=5301
+        webserver=true
+        webserver-address=0.0.0.0
+        webserver-allow-from=0.0.0.0/0
+        webserver-port=8081
+        api-key=TymvAM4DKBm5p6dHq
+        log-common-errors=yes
+        logging-facility=0
+        loglevel=4
+        max-cache-entries=1000000
+        max-cache-ttl=300
+        max-negative-ttl=300
+        max-packetcache-entries=500000
+        packetcache-ttl=300
+        forward-zones=lab=127.0.0.1:5300
+        forward-zones+=uis=127.0.0.1:5300
+      pdns.conf: |
+        launch=gsqlite3
+        gsqlite3-dnssec
+        gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
+        disable-axfr=no
+        allow-axfr-ips=127.0.0.1
+        #also-notify=
+        allow-dnsupdate-from=10.1.210.7
+        axfr-lower-serial=yes
+        guardian=yes
+        local-address=127.0.0.1
+        local-port=5302
+        log-dns-details=yes
+        loglevel=4
+        master=yes
+        slave=yes
+        slave-cycle-interval=60
+        webserver=yes
+        webserver-address=0.0.0.0
+        webserver-port=8082
+        webserver-allow-from=0.0.0.0/0
+        api=yes
+        api-key=TymvAM4DKBm5p6dHq
+        default-soa-edit=INCEPTION-INCREMENT
+
+services:
+  - name: tcp
+    annotations:
+      metallb.universe.tf/ip-allocated-from-pool: int
+      metallb.universe.tf/allow-shared-ip: "pdns"
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    loadBalancerIP: 10.171.124.2
+    ports:
+      - name: recursor-tcp
+        protocol: TCP
+        port: 53
+        targetPort: 5301
+      - name: recursor-http
+        protocol: TCP
+        port: 8081
+        targetPort: recursor-http
+      - name: auth-tcp
+        protocol: TCP
+        port: 54
+        targetPort: 5302
+      - name: auth-http
+        protocol: TCP
+        port: 8082
+        targetPort: auth-http
+  - name: udp
+    annotations:
+      metallb.universe.tf/ip-allocated-from-pool: int
+      metallb.universe.tf/allow-shared-ip: "pdns"
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    loadBalancerIP: 10.171.124.2
+    ports:
+      - name: recursor-udp
+        protocol: UDP
+        port: 53
+        targetPort: 5301
+      - name: auth-udp
+        protocol: UDP
+        port: 54
+        targetPort: 5302
+
+# ingresses:
+#   - name: example-ingress
+#     labels: # optional
+#       example-label: '{{ printf "%s-%s" $.Release.Name $.Values.release.name }}'
+#     annotations: # optional
+#       kubernetes.io/ingress.class: int
+#       nginx.ingress.kubernetes.io/backend-protocol: HTTP
+#       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+#       example-annotation: example-value
+#     spec:
+#       tls:
+#         - hosts:
+#             - "{{ $.Values.global.ref }}-example-app.uis.st"
+#           secretName: uis.st
+#       rules:
+#         - host: "{{ $.Values.global.ref }}-example-app.uis.st"
+#           http:
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#                 backend:
+#                   service:
+#                     name: example-service
+#                     port:
+#                       number: 8080

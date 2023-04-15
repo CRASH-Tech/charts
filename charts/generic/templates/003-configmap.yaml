@@ -1,0 +1,18 @@
+{{- range $configmap := $.Values.configmaps }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $configmap.name }}"
+  labels:
+    release: {{ printf "%s-%s" $.Release.Name $.Values.release.name }}
+    {{- range $k, $v := $configmap.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- if $configmap.annotations }}
+  annotations:
+    {{- range $k, $v := $configmap.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+data: {{ tpl ($configmap.data | toYaml) $ | nindent 2 }}
+{{- end }}

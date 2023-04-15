@@ -1,0 +1,42 @@
+{{- range $ingress := $.Values.ingresses }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $ingress.name }}"
+  labels:
+    release: {{ printf "%s-%s" $.Release.Name $.Values.release.name }}
+    {{- range $k, $v := $ingress.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- if $ingress.annotations }}
+  annotations:
+    {{- range $k, $v := $ingress.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- if $ingress.spec.tls }}
+  tls:
+    {{- range $tlsData := $ingress.spec.tls }}
+    - hosts:
+        {{- range $host := $tlsData.hosts }}
+        - {{ tpl $host $ }}
+        {{- end }}
+      secretName: {{ tpl $tlsData.secretName $ }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range $rule := $ingress.spec.rules }}
+    - host: {{ tpl $rule.host $ }}
+      http:
+        paths:
+          {{- range $path := $rule.http.paths }}
+          - path: {{ $path.path }}
+            pathType: {{ $path.pathType }}
+            backend:
+              service:
+                name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $path.backend.service.name }}"
+                port: {{ $path.backend.service.port | toYaml | nindent 18 }}
+        {{- end }}
+    {{- end }}
+{{- end }}

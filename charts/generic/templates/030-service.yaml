@@ -1,0 +1,32 @@
+{{- range $service := $.Values.services }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $service.name }}"
+  labels:
+    release: {{ printf "%s-%s" $.Release.Name $.Values.release.name }}
+    {{- range $k, $v := $service.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- if $service.annotations }}
+  annotations:
+    {{- range $k, $v := $service.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  selector:
+    release: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}"
+  type: {{ $service.type }}
+  {{- if $service.sessionAffinity }}
+  sessionAffinity: {{ $service.sessionAffinity }}
+  {{- end }}
+  {{- if $service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ $service.externalTrafficPolicy }}
+  {{- end }}
+  {{- if $service.loadBalancerIP }}
+  loadBalancerIP: {{ $service.loadBalancerIP }}
+  {{- end }}
+  ports: {{ $service.ports | toYaml | nindent 4 }}
+---
+{{- end }}
