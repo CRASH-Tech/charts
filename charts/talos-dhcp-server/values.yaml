@@ -2,27 +2,17 @@ replicaCount: 1
 
 image:
   repository: crashntech/talos-dhcp-server
-  pullPolicy: Always #IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: 0.0.5
+  pullPolicy: IfNotPresent
+  tag: 0.0.6
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
   name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
 
 securityContext:
   allowPrivilegeEscalation: true
@@ -33,65 +23,69 @@ securityContext:
     add:
       - NET_ADMIN
       - NET_RAW
-    # drop:
-    # - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 
 nodeSelector: {}
+  # kubernetes.io/hostname: k-root-m2
 
-tolerations: []
+tolerations:
+  - operator: Exists
+    effect: NoSchedule
 
 affinity: {}
 
-config:
-  talos-1.4.0.ipxe: |
-    #!ipxe
+volumeMounts:
+  - mountPath: /var/lib/dhcp/
+    name: dhcpd-leases
+  - name: config
+    mountPath: /etc/dhcp/dhcpd.conf
+    subPath: dhcpd.conf
+  - name: config
+    mountPath: /srv/pxe/talos-1.4.0.ipxe
+    subPath: talos-1.4.0.ipxe
 
-    kernel http://10.171.123.3/talos/1.4.0/vmlinuz-amd64 slab_nomerge pti=on talos.platform=metal
-    initrd http://10.171.123.3/talos/1.4.0/initramfs-amd64.xz
-    boot
-  dhcpd.conf: |
-    default-lease-time 600;
-    max-lease-time 7200;
-    ddns-update-style none;
-    authoritative;
-    log-facility local7;
-    update-conflict-detection true;
+config: {}
+  # talos-1.4.0.ipxe: |
+  #   #!ipxe
 
-    subnet 10.171.0.0 netmask 255.255.0.0 {
-    }
+  #   kernel http://10.171.123.3/talos/1.4.0/vmlinuz-amd64 slab_nomerge pti=on talos.platform=metal
+  #   initrd http://10.171.123.3/talos/1.4.0/initramfs-amd64.xz
+  #   boot
+  # dhcpd.conf: |
+  #   default-lease-time 600;
+  #   max-lease-time 7200;
+  #   ddns-update-style none;
+  #   authoritative;
+  #   log-facility local7;
+  #   update-conflict-detection true;
 
-    subnet 10.171.124.0 netmask 255.255.255.0 {
-      range 10.171.124.10 10.171.124.200;
-      option domain-name-servers 10.171.124.254, 10.171.124.254;
-      option domain-name "cluster.local";
-      option subnet-mask 255.255.255.0;
-      option routers 10.171.124.254;
-      option broadcast-address 10.171.124.255;
-      default-lease-time 600;
-      max-lease-time 7200;
-      filename "http://10.171.123.3/pxe/talos-1.4.0.ipxe";
-    }
+  #   subnet 10.171.0.0 netmask 255.255.0.0 {
+  #   }
+
+  #   subnet 10.171.124.0 netmask 255.255.255.0 {
+  #     range 10.171.124.10 10.171.124.200;
+  #     option domain-name-servers 10.171.124.254, 10.171.124.254;
+  #     option domain-name "cluster.local";
+  #     option subnet-mask 255.255.255.0;
+  #     option routers 10.171.124.254;
+  #     option broadcast-address 10.171.124.255;
+  #     default-lease-time 600;
+  #     max-lease-time 7200;
+  #     filename "http://10.171.123.3/pxe/talos-1.4.0.ipxe";
+  #   }
 
 
-    #host test {
-    #   #option host-name "{{ $host }}";
-    #   option dhcp-client-identifier 721099fe-a82b-4006-ba1a-c626be216bba;
-    #   #hardware ethernet {{ upper $mac }};
-    #   fixed-address 10.171.124.100;
-    #}
+  #   #host test {
+  #   #   #option host-name "{{ $host }}";
+  #   #   option dhcp-client-identifier 721099fe-a82b-4006-ba1a-c626be216bba;
+  #   #   #hardware ethernet {{ upper $mac }};
+  #   #   fixed-address 10.171.124.100;
+  #   #}

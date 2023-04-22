@@ -6,6 +6,8 @@ metadata:
     {{- include "talos-dhcp-server.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "talos-dhcp-server.selectorLabels" . | nindent 6 }}
@@ -23,39 +25,27 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "talos-dhcp-server.serviceAccountName" . }}
-      nodeSelector:
-        kubernetes.io/hostname: k-root-m2
       hostNetwork: true
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: talos-dhcp-server
           #command: ["sleep", "infinity"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - mountPath: /var/lib/dhcp/
-              name: dhcpd-leases
-            - name: config
-              mountPath: /etc/dhcp/dhcpd.conf
-              subPath: dhcpd.conf
-            - name: config
-              mountPath: /srv/pxe/talos-1.4.0.ipxe
-              subPath: talos-1.4.0.ipxe
+          volumeMounts: {{ .Values.volumeMounts | toYaml | nindent 12 }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
