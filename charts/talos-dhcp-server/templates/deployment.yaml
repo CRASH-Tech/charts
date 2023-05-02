@@ -38,6 +38,12 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+            - name: dhcp
+              containerPort: 67
+              protocol: UDP
+            - name: tftp
+              containerPort: 69
+              protocol: UDP
           livenessProbe:
             httpGet:
               path: /

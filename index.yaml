@@ -2,16 +2,16 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2023-05-02T09:52:24.509043875Z"
+    created: "2023-05-02T15:05:37.091014919Z"
     description: generic
-    digest: 3dcfdeeb5c1bbd85f12f68f8aa9687ac688948f1aad3f1d35e1df675671516a2
+    digest: ac10e8ea3696d49bbf0d018b91c4aaf16e1c025dc16bb5c89ec064be673e75f3
     name: generic
     type: application
     urls:
     - generic-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2023-05-02T09:52:24.508643328Z"
+    created: "2023-05-02T15:05:37.090486582Z"
     description: generic
     digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
     name: generic
@@ -20,7 +20,7 @@ entries:
     - generic-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2023-05-02T09:52:24.508228754Z"
+    created: "2023-05-02T15:05:37.089058495Z"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -31,9 +31,9 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-05-02T09:52:24.509376505Z"
+    created: "2023-05-02T15:05:37.091406208Z"
     description: proxmox-operator
-    digest: a496134ae1df2240e2ac7a4830a893e80e163de1438973d78083ad5fb7bce8a7
+    digest: dd26e4ddfef4b5cd5c101f5fcbb5e6a925fd90ff175b7b027a86a17b7af66648
     name: proxmox-operator
     type: application
     urls:
@@ -41,8 +41,17 @@ entries:
     version: 0.1.1
   talos-dhcp-server:
   - apiVersion: v2
+    appVersion: 0.0.9
+    created: "2023-05-02T15:05:37.093030765Z"
+    digest: 3860e87f6269bdde8d2a1a2850001fe3c273882eb172ad4084b834ff9856dc21
+    name: talos-dhcp-server
+    type: application
+    urls:
+    - talos-dhcp-server-0.0.9.tgz
+    version: 0.0.9
+  - apiVersion: v2
     appVersion: 0.0.7
-    created: "2023-05-02T09:52:24.510368246Z"
+    created: "2023-05-02T15:05:37.092474408Z"
     digest: d2907441262aa35172505c3e1949d91b3ecfe86fc4d98328a94fb82b70a5f21e
     name: talos-dhcp-server
     type: application
@@ -51,11 +60,11 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2023-05-02T09:52:24.509856688Z"
+    created: "2023-05-02T15:05:37.092016087Z"
     digest: 71c773b55f030d7873fb07baeb3a8932d6bc1f1c0a9774e144d0905329bbf6bc
     name: talos-dhcp-server
     type: application
     urls:
     - talos-dhcp-server-0.0.6.tgz
     version: 0.0.6
-generated: "2023-05-02T09:52:24.507484903Z"
+generated: "2023-05-02T15:05:37.088368016Z"
