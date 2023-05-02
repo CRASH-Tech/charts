@@ -2,16 +2,16 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2023-04-23T01:11:44.478391006+03:00"
+    created: "2023-05-02T09:52:24.509043875Z"
     description: generic
-    digest: 7d070c68609cd7ea3dd4ed1bc801668d135e58606bb810cac4f6a89860b273ae
+    digest: 3dcfdeeb5c1bbd85f12f68f8aa9687ac688948f1aad3f1d35e1df675671516a2
     name: generic
     type: application
     urls:
     - generic-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2023-04-23T01:11:44.47822813+03:00"
+    created: "2023-05-02T09:52:24.508643328Z"
     description: generic
     digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
     name: generic
@@ -20,7 +20,7 @@ entries:
     - generic-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2023-04-23T01:11:44.478060847+03:00"
+    created: "2023-05-02T09:52:24.508228754Z"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -31,9 +31,9 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-04-23T01:11:44.478521379+03:00"
+    created: "2023-05-02T09:52:24.509376505Z"
     description: proxmox-operator
-    digest: c27676bd7b791b964c34f838e92df6e5803328098325c881819447723240700f
+    digest: a496134ae1df2240e2ac7a4830a893e80e163de1438973d78083ad5fb7bce8a7
     name: proxmox-operator
     type: application
     urls:
@@ -41,12 +41,21 @@ entries:
     version: 0.1.1
   talos-dhcp-server:
   - apiVersion: v2
+    appVersion: 0.0.7
+    created: "2023-05-02T09:52:24.510368246Z"
+    digest: d2907441262aa35172505c3e1949d91b3ecfe86fc4d98328a94fb82b70a5f21e
+    name: talos-dhcp-server
+    type: application
+    urls:
+    - talos-dhcp-server-0.0.7.tgz
+    version: 0.0.7
+  - apiVersion: v2
     appVersion: 0.0.6
-    created: "2023-04-23T01:11:44.478684917+03:00"
+    created: "2023-05-02T09:52:24.509856688Z"
     digest: 71c773b55f030d7873fb07baeb3a8932d6bc1f1c0a9774e144d0905329bbf6bc
     name: talos-dhcp-server
     type: application
     urls:
     - talos-dhcp-server-0.0.6.tgz
     version: 0.0.6
-generated: "2023-04-23T01:11:44.477730126+03:00"
+generated: "2023-05-02T09:52:24.507484903Z"

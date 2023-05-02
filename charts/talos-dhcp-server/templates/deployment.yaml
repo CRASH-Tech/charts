@@ -66,4 +66,4 @@ spec:
             sizeLimit: 100Mi
         - name: config
           secret:
-            secretName: "{{ $.Release.Name }}-config"
+            secretName: {{ .Values.existingConfigSecret | default (include "talos-dhcp-server.fullname" .) }}

@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crashntech/talos-dhcp-server
   pullPolicy: IfNotPresent
-  tag: 0.0.6
+  tag: 0.0.7
 
 imagePullSecrets: []
 nameOverride: ""
@@ -53,6 +53,7 @@ volumeMounts:
     mountPath: /srv/pxe/talos-1.4.0.ipxe
     subPath: talos-1.4.0.ipxe
 
+existingConfigSecret: ""
 config: {}
   # talos-1.4.0.ipxe: |
   #   #!ipxe
