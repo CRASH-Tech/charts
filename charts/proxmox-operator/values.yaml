@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crashntech/proxmox-operator
   pullPolicy: IfNotPresent
-  tag: 0.1.1
+  tag: 0.1.2
 
 imagePullSecrets: []
 nameOverride: ""
