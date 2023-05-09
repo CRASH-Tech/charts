@@ -2,16 +2,16 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2023-05-09T11:48:11.688135728Z"
+    created: "2023-05-09T14:19:14.969457694Z"
     description: generic
-    digest: 991943d084cdbcf340fefb63f4501e3dc9360d22883044eda7e4cb687f1b8f84
+    digest: 9cf49bfc915830b6b0142d897b8dc8c4369fec4067c7ed455a759fc86bb40597
     name: generic
     type: application
     urls:
     - generic-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2023-05-09T11:48:11.687684932Z"
+    created: "2023-05-09T14:19:14.968993607Z"
     description: generic
     digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
     name: generic
@@ -20,7 +20,7 @@ entries:
     - generic-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2023-05-09T11:48:11.686521541Z"
+    created: "2023-05-09T14:19:14.968412862Z"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -31,9 +31,9 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.2
-    created: "2023-05-09T11:48:11.689887403Z"
+    created: "2023-05-09T14:19:14.970449233Z"
     description: proxmox-operator
-    digest: 9cb79921b4f61af4faa9e104dd58065de132c52101b275214dcb4594118a9040
+    digest: ffb566fc2462f64f5e830c386b5a30716ca8e2af72c7142045590668abf7fdd3
     name: proxmox-operator
     type: application
     urls:
@@ -41,7 +41,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-05-09T11:48:11.689537289Z"
+    created: "2023-05-09T14:19:14.970065589Z"
     description: proxmox-operator
     digest: dd26e4ddfef4b5cd5c101f5fcbb5e6a925fd90ff175b7b027a86a17b7af66648
     name: proxmox-operator
@@ -52,8 +52,8 @@ entries:
   talos-dhcp-server:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-05-09T11:48:11.693605794Z"
-    digest: 73da8e4fe07e4da024ef82d514b6fd8f2fc478036555e33afa2878af89103c66
+    created: "2023-05-09T14:19:14.972419363Z"
+    digest: b3d3127acf07f7f154bc31ff4067ccb9a39fd9429f6e406038a34390a8157965
     name: talos-dhcp-server
     type: application
     urls:
@@ -61,7 +61,7 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: 0.0.9
-    created: "2023-05-09T11:48:11.693050395Z"
+    created: "2023-05-09T14:19:14.971847281Z"
     digest: 0cb654fc8a530907de3086e63930e63b5e8c75051b1e8844458ca362eaf8f45f
     name: talos-dhcp-server
     type: application
@@ -70,7 +70,7 @@ entries:
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2023-05-09T11:48:11.691886592Z"
+    created: "2023-05-09T14:19:14.971341479Z"
     digest: d2907441262aa35172505c3e1949d91b3ecfe86fc4d98328a94fb82b70a5f21e
     name: talos-dhcp-server
     type: application
@@ -79,11 +79,11 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2023-05-09T11:48:11.690900285Z"
+    created: "2023-05-09T14:19:14.970909069Z"
     digest: 71c773b55f030d7873fb07baeb3a8932d6bc1f1c0a9774e144d0905329bbf6bc
     name: talos-dhcp-server
     type: application
     urls:
     - talos-dhcp-server-0.0.6.tgz
     version: 0.0.6
-generated: "2023-05-09T11:48:11.68249433Z"
+generated: "2023-05-09T14:19:14.967569217Z"
