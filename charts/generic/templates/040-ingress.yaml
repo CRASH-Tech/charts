@@ -15,6 +15,9 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
+  {{- if $ingress.spec.ingressClassName }}
+  ingressClassName: {{ $ingress.spec.ingressClassName }}
+  {{- end }}
   {{- if $ingress.spec.tls }}
   tls:
     {{- range $tlsData := $ingress.spec.tls }}

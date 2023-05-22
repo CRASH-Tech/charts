@@ -164,6 +164,7 @@
 #       nginx.ingress.kubernetes.io/ssl-redirect: "true"
 #       example-annotation: example-value
 #     spec:
+#       ingressClassName: int # optional
 #       tls:
 #         - hosts:
 #             - "{{ $.Values.global.ref }}-example-app.example.local"
