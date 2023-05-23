@@ -41,3 +41,19 @@ spec:
   {{- if .Values.service.externalTrafficPolicy }}
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
   {{- end }}
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-auth"
+spec:
+  ports:
+    - name: dns
+      protocol: UDP
+      port: 5300
+      targetPort: 5300
+  selector:
+    release: "{{ .Release.Name }}-pdns"
+  type: ClusterIP

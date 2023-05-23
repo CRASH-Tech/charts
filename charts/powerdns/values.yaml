@@ -45,7 +45,7 @@ pdnsConf: |
   disable-axfr=no
   allow-axfr-ips=0.0.0.0
   #also-notify=
-  allow-dnsupdate-from=10.1.210.7
+  allow-dnsupdate-from=10.244.0.0/16
   axfr-lower-serial=yes
   guardian=yes
   local-address=0.0.0.0
