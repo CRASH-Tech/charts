@@ -1,0 +1,95 @@
+global:
+  secrets:
+    postgresPassword: changeMe
+    repmgrPassword: changeMe
+    pgpoolPassword: changeMe
+    pdnsApiKey: changeMe
+
+postgresql-ha:
+  postgresql:
+    database: pdns
+    syncReplication: true
+    replicaCount: 3
+    existingSecret: powerdns-postgresql-ha-postgresql
+    initdbScriptsSecret: powerdns-postgres-schema
+  pgpool:
+    replicaCount: 2
+    existingSecret: powerdns-postgresql-ha-pgpool
+  persistence:
+    enabled: true
+    storageClass: ceph
+    size: 1Gi
+
+replicas: 1
+labels: {}
+annotations: {}
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 10.171.130.1
+  externalTrafficPolicy: Local
+
+ingress:
+  ingressClassName: int
+  secretName: example.domain
+  adminDomain: dns.example.domain
+  authDomain: auth.example.domain
+  recursorDomain: recursor.example.domain
+
+pdnsConf: |
+  launch=gpgsql
+  gpgsql-host={{ .Release.Name }}-postgresql-ha-pgpool
+  gpgsql-dbname=pdns
+  gpgsql-user=postgres
+  gpgsql-password={{ .Values.global.secrets.postgresPassword }}
+  disable-axfr=no
+  allow-axfr-ips=0.0.0.0
+  #also-notify=
+  allow-dnsupdate-from=10.1.210.7
+  axfr-lower-serial=yes
+  guardian=yes
+  local-address=0.0.0.0
+  local-port=5300
+  log-dns-details=yes
+  loglevel=4
+  master=yes
+  slave=yes
+  slave-cycle-interval=60
+  webserver=yes
+  webserver-address=0.0.0.0
+  webserver-port=8080
+  webserver-allow-from=0.0.0.0/0
+  api=yes
+  api-key={{ .Values.global.secrets.pdnsApiKey }}
+  default-soa-edit=INCEPTION-INCREMENT
+
+recursorConf: |
+  local-address=0.0.0.0
+  local-port=5301
+  webserver=true
+  webserver-address=0.0.0.0
+  webserver-allow-from=0.0.0.0/0
+  webserver-port=8081
+  api-key={{ .Values.global.secrets.pdnsApiKey }}
+  log-common-errors=yes
+  logging-facility=0
+  loglevel=4
+  max-cache-entries=1000000
+  max-cache-ttl=300
+  max-negative-ttl=300
+  max-packetcache-entries=500000
+  packetcache-ttl=300
+  forward-zones-recurse=.=8.8.8.8:53
+  forward-zones-recurse+=.=77.88.8.8:53
+  forward-zones=example.domain=127.0.0.1:5300
+  forward-zones+=xfix.lab=127.0.0.1:5300
+
+adminConf:
+  BIND_ADDRESS: "0.0.0.0:8082"
+  SECRET_KEY: "{{ .Values.global.secrets.postgresPassword }}"
+  SQLALCHEMY_DATABASE_URI: "postgresql://postgres:{{ .Values.global.secrets.postgresPassword }}@{{ .Release.Name }}-postgresql-ha-pgpool/pdns"
+  PDNS_API_URL: "http://{{ .Release.Name }}-pdns-http:8080"
+  PDNS_API_KEY: "{{ .Values.global.secrets.pdnsApiKey }}"
+  PDNS_VERSION: "4.7.3"
+  SESSION_TYPE: "sqlalchemy"
+  OFFLINE_MODE: "true"

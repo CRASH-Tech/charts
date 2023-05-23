@@ -1,0 +1,43 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-admin"
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.adminDomain }}
+        - {{ .Values.ingress.authDomain }}
+        - {{ .Values.ingress.recursorDomain }}
+      secretName: {{ .Values.ingress.secretName }}
+  rules:
+    - host: {{ .Values.ingress.authDomain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Release.Name }}-pdns-http"
+                port:
+                  number: 8080
+    - host: {{ .Values.ingress.recursorDomain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Release.Name }}-pdns-http"
+                port:
+                  number: 8081
+    - host: {{ .Values.ingress.adminDomain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Release.Name }}-pdns-http"
+                port:
+                  number: 8082

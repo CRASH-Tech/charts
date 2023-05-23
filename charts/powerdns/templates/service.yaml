@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-http"
+spec:
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: recursor
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+    - name: admin
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+  selector:
+    release: "{{ .Release.Name }}-pdns"
+  type: ClusterIP
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-dns"
+spec:
+  ports:
+    - name: dns
+      protocol: UDP
+      port: 53
+      targetPort: 5301
+  selector:
+    release: "{{ .Release.Name }}-pdns"
+  type: {{ .Values.service.type }}
+  {{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  {{- end }}

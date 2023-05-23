@@ -1,0 +1,130 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: "{{ .Release.Name }}-pdns"
+  labels:
+    release: "{{ .Release.Name }}-pdns"
+    {{- range $k, $v := .Values.labels }}
+    {{ $k }}: {{ tpl $v $ }}
+    {{- end }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      release: "{{ .Release.Name }}-pdns"
+  template:
+    metadata:
+      labels:
+        release: "{{ .Release.Name }}-pdns"
+        {{- range $k, $v := .Values.labels }}
+        {{ $k }}: {{ tpl $v $ }}
+        {{- end }}
+      {{- if .Values.annotations }}
+      annotations:
+        {{- range $k, $v := .Values.annotations }}
+        {{ $k }}: {{ tpl $v $ | quote }}
+        {{- end }}
+      {{- end }}
+    spec:
+      restartPolicy: Always
+      {{- if .Values.tolerations }}
+      tolerations: {{ .Values.tolerations | toYaml | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: pdns-config
+          secret:
+            secretName: "{{ .Release.Name }}-pdns-config"
+        - name: admin-config
+          secret:
+            secretName: "{{ .Release.Name }}-admin-config"
+      containers:
+        - name: auth
+          image: powerdns/pdns-auth-47:4.7.3
+          ports:
+            - name: dns-tcp
+              containerPort: 5300
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 5300
+              protocol: UDP
+            - name: http
+              containerPort: 8080
+              protocol: UDP
+          resources:
+            limits:
+              cpu: '2'
+              memory: 512Mi
+            requests:
+              cpu: '1'
+              memory: 128Mi
+          volumeMounts:
+            - name: pdns-config
+              mountPath: /etc/powerdns/pdns.conf
+              subPath: pdns.conf
+          livenessProbe:
+            tcpSocket:
+              port: 5300
+          readinessProbe:
+            tcpSocket:
+              port: 5300
+          imagePullPolicy: IfNotPresent
+        - name: recursor
+          image: powerdns/pdns-recursor-47:4.7.3
+          ports:
+            - name: dns-tcp
+              containerPort: 5301
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 5301
+              protocol: UDP
+            - name: http
+              containerPort: 8081
+              protocol: UDP
+          resources:
+            limits:
+              cpu: '2'
+              memory: 512Mi
+            requests:
+              cpu: '1'
+              memory: 128Mi
+          volumeMounts:
+            - name: pdns-config
+              mountPath: /etc/powerdns/recursor.conf
+              subPath: recursor.conf
+          livenessProbe:
+            tcpSocket:
+              port: 5301
+          readinessProbe:
+            tcpSocket:
+              port: 5301
+          imagePullPolicy: IfNotPresent
+        - name: admin
+          image: powerdnsadmin/pda-legacy:dev
+          ports:
+            - name: http
+              containerPort: 8082
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: "{{ .Release.Name }}-pdns-admin-config"
+          resources:
+            limits:
+              cpu: '2'
+              memory: 512Mi
+            requests:
+              cpu: '1'
+              memory: 128Mi
+          livenessProbe:
+            tcpSocket:
+              port: 8082
+          readinessProbe:
+            tcpSocket:
+              port: 8082
