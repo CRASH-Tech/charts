@@ -26,6 +26,18 @@ kind: Service
 apiVersion: v1
 metadata:
   name: "{{ .Release.Name }}-pdns-dns"
+  {{- if .Values.service.labels }}
+  labels:
+    {{- range $k, $v := .Values.service.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.service.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
 spec:
   ports:
     - name: dns

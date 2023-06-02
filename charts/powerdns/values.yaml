@@ -25,6 +25,8 @@ labels: {}
 annotations: {}
 
 service:
+  annotations:
+    metallb.universe.tf/address-pool: int
   type: LoadBalancer
   loadBalancerIP: 10.171.130.1
   externalTrafficPolicy: Local
