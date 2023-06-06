@@ -69,3 +69,43 @@ spec:
   selector:
     release: "{{ .Release.Name }}-pdns"
   type: ClusterIP
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-auth-metrics"
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '8080'
+    prometheus.io/scrape: 'true'
+spec:
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    release: "{{ .Release.Name }}-pdns"
+  type: ClusterIP
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-pdns-recursor-metrics"
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '8081'
+    prometheus.io/scrape: 'true'
+spec:
+  ports:
+    - name: recursor
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  selector:
+    release: "{{ .Release.Name }}-pdns"
+  type: ClusterIP
