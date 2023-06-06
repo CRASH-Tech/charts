@@ -40,7 +40,11 @@ metadata:
   {{- end }}
 spec:
   ports:
-    - name: dns
+    - name: auth
+      protocol: UDP
+      port: 5300
+      targetPort: 5300
+    - name: recusor
       protocol: UDP
       port: 53
       targetPort: 5301

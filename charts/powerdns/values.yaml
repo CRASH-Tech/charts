@@ -82,6 +82,7 @@ recursorConf: |
   max-negative-ttl=300
   max-packetcache-entries=500000
   packetcache-ttl=300
+  allow-from=0.0.0.0/0
   forward-zones-recurse=.=8.8.8.8:53
   forward-zones-recurse+=.=77.88.8.8:53
   forward-zones=example.domain=127.0.0.1:5300
