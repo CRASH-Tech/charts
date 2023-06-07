@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-gitlab
+  {{- if .Values.ingress.labels }}
+  labels:
+    {{- range $k, $v := .Values.ingress.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.ingress.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.spec.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.spec.ingressClassName }}
+  {{- end }}
+  {{- if .Values.ingress.spec.tls }}
+  tls:
+    {{- range $tlsData := .Values.ingress.spec.tls }}
+    - hosts:
+        {{- range $host := $tlsData.hosts }}
+        - {{ tpl $host $ }}
+        {{- end }}
+      secretName: {{ tpl $tlsData.secretName $ }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range $host := .Values.ingress.spec.hosts }}
+    - host: {{ tpl $host $ }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $.Release.Name }}-gitlab-http
+                port:
+                  number: {{ $.Values.services.http.port }}
+    {{- end }}

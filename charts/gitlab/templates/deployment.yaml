@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-gitlab
+  labels:
+    app: {{ .Release.Name }}-gitlab
+spec:
+  replicas: 1 # DO NOT SCALE IT!
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-gitlab
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-gitlab
+      annotations:
+        checksum/values: {{ toJson .Values.config | sha256sum }}
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: gitlab
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: IfNotPresent
+          readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 }}
+          livenessProbe: {{ .Values.livenessProbe | toYaml | nindent 12 }}
+          startupProbe: {{ .Values.startupProbe | toYaml | nindent 12 }}
+          resources:
+            requests: {{ .Values.resources.requests | toYaml | nindent 14 }}
+            limits: {{ .Values.resources.limits | toYaml | nindent 14 }}
+          ports:
+            - name: ssh
+              containerPort: {{ .Values.services.ssh.containerPort }}
+              protocol: TCP
+            - name: registry
+              containerPort: {{ .Values.services.registry.containerPort }}
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.services.http.containerPort }}
+              protocol: TCP
+            - name: https
+              containerPort: {{ .Values.services.https.containerPort }}
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /etc/gitlab
+              subPath: config
+            - name: data
+              mountPath: /var/opt/gitlab
+              subPath: data
+            - name: data
+              mountPath: /var/log/gitlab
+              subPath: logs
+            {{- range $config, $configData := .Values.config }}
+            - name: config
+              mountPath: /etc/gitlab/{{ $config }}
+              subPath: {{ $config }}
+            {{- end }}
+          envFrom:
+           - secretRef:
+               name: {{ .Release.Name }}-gitlab-env
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-gitlab
+        - name: config
+          secret:
+            secretName: {{ .Release.Name }}-gitlab
+        # - name: env
+        #   secret:
+        #     secretName: {{ .Release.Name }}-gitlab-env

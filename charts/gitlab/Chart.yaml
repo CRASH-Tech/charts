@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gitlab
+version: 1.0.0
+appVersion: 16.0.3
