@@ -1,0 +1,4 @@
+apiVersion: v2
+name: werf-vault-sync
+version: 1.0.0
+appVersion: 1.2.240

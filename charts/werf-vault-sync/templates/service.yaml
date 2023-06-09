@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ $.Release.Name }}-werf-vault-sync"
+spec:
+  type: ClusterIP
+  ports:
+    {{- if $.Values.vault.enabled }}
+    - protocol: TCP
+      name: valut
+      port: 8080
+      targetPort: 8080
+    {{- end }}
+    {{- if $.Values.sync.enabled }}
+    - protocol: TCP
+      name: sync
+      port: 9090
+      targetPort: 9090
+    {{- end }}
+  selector:
+    app: "{{ $.Release.Name }}-werf-vault-sync"

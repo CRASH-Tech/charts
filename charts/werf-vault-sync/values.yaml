@@ -1,0 +1,17 @@
+replicas: 1
+image: crashntech/werf-vault:1.0.0
+
+vault:
+  enabled: true
+  existingSecret: ""
+  secretKey: 0b0bbbe5a2044a9a427b0115a2983a48
+
+sync:
+  enabled: true
+
+ingress:
+  annotations: {}
+  ingressClass: int
+  vaultHost: werf-vault.example.domain
+  syncHost: werf-sync.example.domain
+  tlsSecret: example.domain

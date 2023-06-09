@@ -2,16 +2,16 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2023-06-07T18:52:27.964450081Z"
+    created: "2023-06-09T15:51:42.968063634Z"
     description: generic
-    digest: ab7352493f20fd9a36744202d52ba539c821eda8eafeb4f3ff5288b4dee1dedd
+    digest: 79b92f2e7955969b06a1c38bb1b4439808a5160e7fa1788842aa86a0150674bf
     name: generic
     type: application
     urls:
     - generic-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
-    created: "2023-06-07T18:52:27.9639161Z"
+    created: "2023-06-09T15:51:42.967633463Z"
     description: generic
     digest: a126ac39a9eb1621f242839377883229e09e5ddb471ab75d505f17c3fe7fc7c1
     name: generic
@@ -20,7 +20,7 @@ entries:
     - generic-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2023-06-07T18:52:27.963387735Z"
+    created: "2023-06-09T15:51:42.966347305Z"
     description: generic
     digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
     name: generic
@@ -29,7 +29,7 @@ entries:
     - generic-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2023-06-07T18:52:27.962780813Z"
+    created: "2023-06-09T15:51:42.965412553Z"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -40,8 +40,8 @@ entries:
   gitlab:
   - apiVersion: v2
     appVersion: 16.0.3
-    created: "2023-06-07T18:52:27.965143418Z"
-    digest: 90ae36baaff93696a1831ebe60b348f0849e6a574a3800a9b3e799db529e732e
+    created: "2023-06-09T15:51:42.968649932Z"
+    digest: 34fa597da889c750d0f5371e4abc24c3ce8d6e479a70b54be6d6fa048ccf9262
     name: gitlab
     urls:
     - gitlab-1.0.0.tgz
@@ -49,13 +49,13 @@ entries:
   powerdns:
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:28.026301711Z"
+    created: "2023-06-09T15:51:43.03143584Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 11.7.2
     description: powerdns
-    digest: ad7bc95e8be90ea0f34b5568ceab715e90eae9e17d15ea05f43c85bc09847350
+    digest: 9a14c682db06dc6e6d5388bdddce904e5acda7148c4acf0f1b80908c3c7cad03
     name: powerdns
     type: application
     urls:
@@ -63,7 +63,7 @@ entries:
     version: 1.0.6
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:28.016840205Z"
+    created: "2023-06-09T15:51:43.023715231Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -77,7 +77,7 @@ entries:
     version: 1.0.5
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:28.009763784Z"
+    created: "2023-06-09T15:51:43.014238096Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -91,7 +91,7 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:28.000491153Z"
+    created: "2023-06-09T15:51:43.005029909Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -105,7 +105,7 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:27.993053644Z"
+    created: "2023-06-09T15:51:42.996560524Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -119,7 +119,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:27.983534196Z"
+    created: "2023-06-09T15:51:42.986761537Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -133,7 +133,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2023-06-07T18:52:27.975901951Z"
+    created: "2023-06-09T15:51:42.97850982Z"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -148,9 +148,9 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 0.1.2
-    created: "2023-06-07T18:52:28.027111122Z"
+    created: "2023-06-09T15:51:43.032639559Z"
     description: proxmox-operator
-    digest: f704eaf915e841b53876e8701d56a321fa0a9c94569d2d4a83d5589602f3b475
+    digest: e6b04ad8f14a9b0d54225bacb344c06409f6d0c5bdc798eb5d5c6ac525121b5a
     name: proxmox-operator
     type: application
     urls:
@@ -158,7 +158,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-06-07T18:52:28.026743692Z"
+    created: "2023-06-09T15:51:43.032244074Z"
     description: proxmox-operator
     digest: dd26e4ddfef4b5cd5c101f5fcbb5e6a925fd90ff175b7b027a86a17b7af66648
     name: proxmox-operator
@@ -169,8 +169,8 @@ entries:
   talos-dhcp-server:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-06-07T18:52:28.029313661Z"
-    digest: 23fa7f7763ebb173b313aeea743a10e7e46c62516b012e1a192b54b9f3878e20
+    created: "2023-06-09T15:51:43.037197141Z"
+    digest: 4e7d68bda6c432119c59a3a237e6c59e9e76c481e8fa25cbbda2df1a3c74c718
     name: talos-dhcp-server
     type: application
     urls:
@@ -178,7 +178,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-06-07T18:52:28.028899506Z"
+    created: "2023-06-09T15:51:43.036612915Z"
     digest: b3d3127acf07f7f154bc31ff4067ccb9a39fd9429f6e406038a34390a8157965
     name: talos-dhcp-server
     type: application
@@ -187,7 +187,7 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: 0.0.9
-    created: "2023-06-07T18:52:28.028482589Z"
+    created: "2023-06-09T15:51:43.035239207Z"
     digest: 0cb654fc8a530907de3086e63930e63b5e8c75051b1e8844458ca362eaf8f45f
     name: talos-dhcp-server
     type: application
@@ -196,7 +196,7 @@ entries:
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2023-06-07T18:52:28.027997524Z"
+    created: "2023-06-09T15:51:43.034309333Z"
     digest: d2907441262aa35172505c3e1949d91b3ecfe86fc4d98328a94fb82b70a5f21e
     name: talos-dhcp-server
     type: application
@@ -205,11 +205,20 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2023-06-07T18:52:28.027550375Z"
+    created: "2023-06-09T15:51:43.033505529Z"
     digest: 71c773b55f030d7873fb07baeb3a8932d6bc1f1c0a9774e144d0905329bbf6bc
     name: talos-dhcp-server
     type: application
     urls:
     - talos-dhcp-server-0.0.6.tgz
     version: 0.0.6
-generated: "2023-06-07T18:52:27.96191103Z"
+  werf-vault-sync:
+  - apiVersion: v2
+    appVersion: 1.2.240
+    created: "2023-06-09T15:51:43.037450612Z"
+    digest: 506aebfe2bae0ca8b6b42c9443523e271392b45c27a11d483383ec97c5fd3008
+    name: werf-vault-sync
+    urls:
+    - werf-vault-sync-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-06-09T15:51:42.964175476Z"

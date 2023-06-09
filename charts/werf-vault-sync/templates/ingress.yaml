@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $.Release.Name }}-werf-vault-sync"
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.ingress.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  ingressClassName: {{ $.Values.ingress.ingressClass }}
+  {{- if $.Values.ingress.tlsSecret }}
+  tls:
+    - hosts:
+        {{- if $.Values.vault.enabled }}
+        - {{ $.Values.ingress.vaultHost }}
+        {{- end }}
+        {{- if $.Values.sync.enabled }}
+        - {{ $.Values.ingress.syncHost }}
+        {{- end }}
+      secretName: {{ $.Values.ingress.tlsSecret }}
+  {{- end}}
+  rules:
+    {{- if $.Values.vault.enabled }}
+    - host: {{ $.Values.ingress.vaultHost }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $.Release.Name }}-werf-vault-sync"
+                port:
+                  number: 8080
+    {{- end }}
+    {{- if $.Values.sync.enabled }}
+    - host: {{ $.Values.ingress.syncHost }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $.Release.Name }}-werf-vault-sync"
+                port:
+                  number: 9090
+    {{- end }}

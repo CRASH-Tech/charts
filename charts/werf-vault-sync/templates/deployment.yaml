@@ -1,0 +1,112 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ $.Release.Name }}-werf-vault-sync
+spec:
+  replicas: {{ $.Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $.Release.Name }}-werf-vault-sync
+  template:
+    metadata:
+      labels:
+        app: {{ $.Release.Name }}-werf-vault-sync
+    spec:
+      containers:
+        {{- if $.Values.vault.enabled }}
+        - name: werf-vault
+          image: {{ $.Values.image }}
+          command: ["/app/main"]
+          ports:
+            - name: vault
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: WERF_HOME
+              value: /tmp/werf
+          envFrom:
+            - secretRef:
+                {{- if eq $.Values.vault.existingSecret "" }}
+                name: {{ $.Release.Name }}-werf-vault-sync
+                {{- else }}
+                name: {{ $.Values.vault.existingSecret }}
+                {{- end }}
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - mountPath: /tmp/werf
+              name: werf-home
+          {{- end }}
+        {{- if $.Values.sync.enabled }}
+        - name: werf-sync
+          image: {{ $.Values.image }}
+          command: ["/usr/local/bin/werf"]
+          args: ["synchronization"]
+          ports:
+            - name: sync
+              containerPort: 9090
+              protocol: TCP
+          env:
+            - name: WERF_HOME
+              value: /tmp/werf
+            - name: WERF_HOST
+              value: "0.0.0.0"
+            - name: WERF_PORT
+              value: "9090"
+          livenessProbe:
+            tcpSocket:
+              port: 9090
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 9090
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - mountPath: /tmp/werf
+              name: werf-home
+          {{- end }}
+      volumes:
+        - name: werf-home
+          emptyDir:
+            medium: Memory
+            sizeLimit: "1Gi"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: registrysecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 2
+  progressDeadlineSeconds: 600
