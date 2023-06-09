@@ -1,0 +1,7 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: gitlab-runner
+spec:
+  finalizers:
+    - kubernetes

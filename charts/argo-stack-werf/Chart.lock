@@ -1,0 +1,12 @@
+dependencies:
+- name: argo-cd
+  repository: https://argoproj.github.io/argo-helm
+  version: 5.36.1
+- name: gitlab-runner
+  repository: https://charts.gitlab.io
+  version: 0.53.2
+- name: werf-vault-sync
+  repository: https://crash-tech.github.io/charts
+  version: 1.0.0
+digest: sha256:793d12213a405b448c62786faa9d138ddb27b93d445836a8f09fffc20099aeee
+generated: "2023-06-09T17:25:52.124100314Z"

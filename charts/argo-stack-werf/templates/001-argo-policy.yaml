@@ -1,0 +1,27 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: argo.policy
+webhooks:
+- name: argo.delete-protection.policy
+  objectSelector:
+    matchLabels:
+      argoproj.io/delete-protection: "true"
+  rules:
+  - apiGroups:
+      - "*"
+    apiVersions:
+      - "*"
+    operations:
+      - DELETE
+    resources:
+      - "*"
+    scope: Namespaced
+  clientConfig:
+    service:
+      namespace: {{ $.Release.Namespace }}
+      name: fake-service
+  admissionReviewVersions:
+    - v1
+  sideEffects: None
+  timeoutSeconds: 1

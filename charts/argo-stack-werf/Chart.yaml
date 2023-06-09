@@ -1,0 +1,14 @@
+apiVersion: v2
+name: argo-stack-werf
+version: 1.0.0
+appVersion: 2.7.4
+dependencies:
+  - name: argo-cd
+    version: 5.36.1
+    repository: https://argoproj.github.io/argo-helm
+  - name: gitlab-runner
+    version: 0.53.2
+    repository: https://charts.gitlab.io
+  - name: werf-vault-sync
+    version: 1.0.0
+    repository: https://crash-tech.github.io/charts

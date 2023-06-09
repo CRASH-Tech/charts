@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmp-werf
+data:
+  plugin.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ConfigManagementPlugin
+    metadata:
+      name: werf
+    spec:
+      version: v1.0
+      init:
+        command:
+          - cmp_werf_handler
+          - init
+      generate:
+        command:
+          - cmp_werf_handler
+          - render
+      discover:
+        fileName: "werf.yaml"

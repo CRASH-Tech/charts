@@ -1,0 +1,12 @@
+{{- range $repository, $repositoryData := .Values.repositories }}
+kind: Secret
+apiVersion: v1
+metadata:
+  name: "argocd-repository-{{ $repository }}"
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+
+stringData: {{ $repositoryData | toYaml | nindent 2 }}
+type: Opaque
+---
+{{- end }}

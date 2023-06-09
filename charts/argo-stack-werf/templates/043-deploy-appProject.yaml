@@ -1,0 +1,41 @@
+{{- if .Values.deploy.enabled }}
+{{- range $project, $projectData := .Values.deploy.projects }}
+{{- $projectName := printf "deploy-%s" $project }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ $projectName }}
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/resource-policy: keep
+    argocd.argoproj.io/sync-options: Prune=false
+  labels:
+    argoproj.io/delete-protection: "true"
+spec:
+  destinations:
+    - namespace: '*'
+      server: '*'
+      name: '*'
+  sourceRepos:
+    - {{ $.Values.deploy.repo }}
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: argoproj.io
+      kind: ClusterWorkflowTemplate
+  orphanedResources:
+    warn: false
+  roles:
+    - groups:
+      {{- toYaml $projectData.admins | nindent 8 }}
+      name: admin
+      policies:
+        - p, proj:{{ $projectName }}:admin, applications, get, {{ $projectName }}/*, allow
+        - p, proj:{{ $projectName }}:admin, applications, sync, {{ $projectName }}/*, allow
+---
+{{- end }}
+{{- end }}

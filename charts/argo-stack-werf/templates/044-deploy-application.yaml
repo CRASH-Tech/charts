@@ -1,0 +1,51 @@
+{{- if .Values.deploy.enabled }}
+{{- range $project, $projectData := .Values.deploy.projects }}
+{{- $projectName := printf "deploy-%s" $project }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $projectName }}
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/resource-policy: keep
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-options: Prune=false
+  labels:
+    argoproj.io/delete-protection: "true"
+    role: deploy
+    project: {{ $project }}
+spec:
+  destination:
+    name: {{ $.Values.deploy.cluster }}
+    namespace: {{ $.Release.Namespace }}
+  project: {{ $projectName }}
+  source:
+    path: .
+    plugin:
+      env:
+        - name: WERF_ENV
+          value: {{ $project }}
+        - name: {{ printf "WERF_VALUES_%s" $project | replace "-" "_" }}
+          value: {{ printf ".helm/values.%s.yaml" $project }}
+        - name: WERF_RELEASE
+          value: {{ $projectName }}
+        - name: WERF_NAMESPACE
+          value: {{ $.Release.Namespace }}
+        - name: WERF_SET_1
+          value: mode=deploy
+        - name: WERF_BUILDAH_MODE
+          value: native-chroot
+        - name: WERF_BUILDAH_STORAGE_DRIVER
+          value: overlay
+        - name: WERF_SKIP_DEPENDENCIES_REPO_REFRESH
+          value: "true"
+    repoURL: {{ $.Values.deploy.repo }}
+    targetRevision: {{ $.Values.deploy.ref }}
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+{{- end }}
+{{- end }}

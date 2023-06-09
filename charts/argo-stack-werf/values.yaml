@@ -1,0 +1,352 @@
+deploy:
+  enabled: false ### FALSE FOR FIRST RUN
+  repo: https://gitlab.example.domain/infra/deploy.git
+  ref: master
+  projects:
+    infra:
+      admins:
+        - admins
+  registry: harbor.example.domain/images
+  werfSyncServer: https://werf-sync.example.domain
+  cluster: k-root
+
+werf-vault-sync:
+  ingress:
+    ingressClass: int
+    vaultHost: werf-vault.example.domain
+    syncHost: werf-sync.example.domain
+    tlsSecret: example.domain
+
+argo-cd:
+  configs:
+    cm:
+      create: true
+      exec.enabled: "true"
+      admin.enabled: "true"
+      cluster.inClusterEnabled: "false"
+      statusbadge.enabled: "true"
+      timeout.reconciliation: 180s
+      timeout.hard.reconciliation: "0"
+      url: "https://argocd.example.domain"
+      application.instanceLabelKey: argocd.argoproj.io/k-root
+      oidc.config: |
+        name: OpenID
+        issuer: https://auth.example.domain/application/o/argocd/
+        clientID:
+        clientSecret:
+        requestedIDTokenClaims:
+          groups:
+            essential: true
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+
+    params:
+      controller.status.processors: 20
+      controller.operation.processors: 10
+      controller.self.heal.timeout.seconds: 30
+      controller.repo.server.timeout.seconds: 60
+      server.insecure: "true"
+      server.enable.gzip: "true"
+      reposerver.parallelism.limit: 0
+
+  controller:
+    replicas: 1
+    metrics:
+      enabled: true
+      applicationLabels:
+        enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "8082"
+          prometheus.io/scrape: "true"
+
+  dex:
+    enabled: false
+
+  redis:
+    enabled: true
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "9121"
+          prometheus.io/scrape: "true"
+
+  server:
+    replicas: 1
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "8082"
+          prometheus.io/scrape: "true"
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: int
+        nginx.org/proxy-connect-timeout: 300s
+        nginx.org/proxy-read-timeout: 300s
+        nginx.org/proxy-send-timeout: 300s
+        nginx.org/client-max-body-size: "100m"
+      hosts:
+        - argocd.example.domain
+      paths:
+        - /
+      pathType: Prefix
+      tls:
+        - secretName: example.domain
+          hosts:
+            - argocd.example.domain
+      https: true
+
+  repoServer:
+    replicas: 1
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "8084"
+          prometheus.io/scrape: "true"
+    extraArgs:
+      - --loglevel=debug
+    containerSecurityContext:
+      capabilities:
+        drop:
+          - all
+      privileged: true
+      runAsNonRoot: false
+      allowPrivilegeEscalation: true
+      readOnlyRootFilesystem: false
+      runAsUser: 0
+    extraContainers:
+      - name: werf
+        image: crashntech/argocd-cmp-werf:1.0.0
+        command: [/var/run/argocd/argocd-cmp-server]
+        args: ["--loglevel", "debug"]
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: plugin.yaml
+            name: cmp-werf
+          - mountPath: /home/argocd/.local
+            name: cmp-werf-local
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            drop:
+              - all
+          privileged: true
+          runAsNonRoot: false
+          allowPrivilegeEscalation: true
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+    volumes:
+      - configMap:
+          name: cmp-werf
+        name: cmp-werf
+      - name: cmp-werf-local
+        emptyDir: {}
+
+  applicationSet:
+    enabled: true
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "8080"
+          prometheus.io/scrape: "true"
+
+    securityContext:
+      capabilities:
+        drop:
+          - all
+      privileged: true
+      runAsNonRoot: false
+      allowPrivilegeEscalation: true
+      readOnlyRootFilesystem: false
+      runAsUser: 1000
+
+    webhook:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: int
+        hosts:
+          - argocd-appset.example.domain
+        paths:
+          - /api/webhook
+        pathType: Prefix
+        tls:
+          - secretName: example.domain
+            hosts:
+              - argo-cd-appset.example.domain
+
+  notifications:
+    enabled: true
+    argocdUrl: https://argocd.example.domain
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "9001"
+          prometheus.io/scrape: "true"
+
+    extraEnv:
+      - name: TZ
+        value: Europe/Moscow
+
+    notifiers:
+      # service.telegram: |
+      #   token:
+
+    subscriptions:
+      - recipients:
+          - telegram:-389009175
+        triggers:
+          - on-sync-status-unknown
+          - on-sync-failed
+          - on-health-degraded
+          - on-deployed
+          - on-sync-succeeded
+          - on-out-of-sync
+
+    templates:
+      template.app-deployed: |
+        message: |
+          Application {{.app.metadata.name}} is now running new version of deployments manifests.
+
+      template.app-health-degraded: |
+        message: |
+          Application {{.app.metadata.name}} has degraded.
+          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}.
+
+      template.app-sync-failed: |
+        message: |
+          The sync operation of application {{.app.metadata.name}} has failed at {{.app.status.operationState.finishedAt}} with the following error: {{.app.status.operationState.message}}
+          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+
+      template.app-sync-running: |
+        message: |
+          The sync operation of application {{.app.metadata.name}} has started at {{.app.status.operationState.startedAt}}.
+          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+
+      template.app-sync-status-unknown: |
+        message: |
+          Application {{.app.metadata.name}} sync is 'Unknown'.
+          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}.
+          {{if ne .serviceType "slack"}}
+          {{range $c := .app.status.conditions}}
+              * {{$c.message}}
+          {{end}}
+          {{end}}
+
+      template.app-sync-succeeded: |
+        message: |
+          Application {{.app.metadata.name}} has been successfully synced at {{.app.status.operationState.finishedAt}}.
+          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+
+      template.app-out-of-sync: |
+        message: |
+          Application {{.app.metadata.name}} is out of sync at {{.app.status.operationState.finishedAt}}.
+          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true
+    triggers:
+      trigger.on-deployed: |
+        - description: Application is synced and healthy. Triggered once per commit.
+          oncePer: app.status.sync.revision
+          send:
+          - app-deployed
+          when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+      trigger.on-health-degraded: |
+        - description: Application has degraded
+          send:
+          - app-health-degraded
+          when: app.status.health.status == 'Degraded'
+      trigger.on-sync-failed: |
+        - description: Application syncing has failed
+          send:
+          - app-sync-failed
+          when: app.status.operationState.phase in ['Error', 'Failed']
+      trigger.on-sync-running: |
+        - description: Application is being synced
+          send:
+          - app-sync-running
+          when: app.status.operationState.phase in ['Running']
+      trigger.on-sync-status-unknown: |
+        - description: Application status is 'Unknown'
+          send:
+          - app-sync-status-unknown
+          when: app.status.sync.status == 'Unknown'
+      trigger.on-sync-succeeded: |
+        - description: Application syncing has succeeded
+          send:
+          - app-sync-succeeded
+          when: app.status.operationState.phase in ['Succeeded']
+      trigger.on-out-of-sync: |
+        - description: Application is out of sync
+          send:
+          - app-out-of-sync
+          when: app.status.sync.status in ['OutOfSync']
+
+gitlab-runner:
+  replicas: 1
+  gitlabUrl: https://gitlab.example.domain/
+
+  rbac:
+    create: false
+    serviceAccountName: gitlab-runner
+    podSecurityPolicy:
+      enabled: true
+      resourceNames:
+        - gitlab-runner
+
+  metrics:
+    enabled: false
+
+  service:
+    enabled: true
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/path: "/metrics"
+      prometheus.io/port: "9252"
+
+  runners:
+    config: |
+      [[runners]]
+        pre_build_script = "source gitlab_werf_handler"
+        [runners.kubernetes]
+          namespace = "gitlab-runner"
+          image = "crashntech/gitlab-runner-werf:1.0.0"
+          service_account = "ci"
+          [runners.kubernetes.node_selector]
+            "node-role.kubernetes.io/werf-runner" = ""
+          [[runners.kubernetes.volumes.host_path]]
+            name = "werf-cache"
+            mount_path = "/var/lib/containers"
+            host_path = "/cache"
+            read_only = false
+
+    tags: "werf"
+    privileged: true
+
+  securityContext:
+    capabilities:
+      drop:
+        - all
+    privileged: true
+    runAsNonRoot: false
+    allowPrivilegeEscalation: true
+    readOnlyRootFilesystem: false
+    runAsUser: 0
