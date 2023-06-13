@@ -8,5 +8,5 @@ dependencies:
 - name: werf-vault-sync
   repository: https://crash-tech.github.io/charts
   version: 1.0.0
-digest: sha256:793d12213a405b448c62786faa9d138ddb27b93d445836a8f09fffc20099aeee
-generated: "2023-06-09T17:25:52.124100314Z"
+digest: sha256:ca8fa4365344105d1b86ef3dd39c72bc230799af8ec53ca06cc17c4fd6b2b867
+generated: "2023-06-09T21:06:28.615044233Z"

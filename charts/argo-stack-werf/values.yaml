@@ -11,6 +11,7 @@ deploy:
   cluster: k-root
 
 werf-vault-sync:
+  enabled: true
   ingress:
     ingressClass: int
     vaultHost: werf-vault.example.domain
@@ -301,6 +302,7 @@ argo-cd:
           when: app.status.sync.status in ['OutOfSync']
 
 gitlab-runner:
+  enabled: true
   replicas: 1
   gitlabUrl: https://gitlab.example.domain/
 
