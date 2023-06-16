@@ -12,11 +12,11 @@ data:
       version: v1.0
       init:
         command:
-          - cmp_werf_handler
+          - werf_handler
           - init
       generate:
         command:
-          - cmp_werf_handler
+          - werf_handler
           - render
       discover:
         fileName: "werf.yaml"
