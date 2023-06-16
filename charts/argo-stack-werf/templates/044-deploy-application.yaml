@@ -38,6 +38,8 @@ spec:
           value: overlay
         - name: WERF_SKIP_DEPENDENCIES_REPO_REFRESH
           value: "true"
+        - name: WERF_REPO_DISABLED
+          value: "true"
     repoURL: {{ $.Values.deploy.repo }}
     targetRevision: {{ $.Values.deploy.ref }}
   syncPolicy:
