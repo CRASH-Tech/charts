@@ -6,7 +6,6 @@ kind: AppProject
 metadata:
   name: {{ $projectName }}
   annotations:
-    helm.sh/hook: post-install
     helm.sh/resource-policy: keep
     argocd.argoproj.io/sync-options: Prune=false
   labels:
