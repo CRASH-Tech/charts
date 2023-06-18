@@ -1,10 +1,8 @@
 #!/bin/bash
 
-for dir in charts/*/
-do
-    dir=${dir%*/}
-    echo "Building chart ${dir##*/}"
-    helm package charts/${dir##*/}/
-done
+CHART=$1
+
+echo "Building chart $CHART"
+helm package charts/$CHART/
 
 helm repo index .
