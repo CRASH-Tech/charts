@@ -65,6 +65,7 @@ pdnsConf: |
   api=yes
   api-key={{ .Values.global.secrets.pdnsApiKey }}
   default-soa-edit=INCEPTION-INCREMENT
+  max-queue-length=100000
 
 recursorConf: |
   local-address=0.0.0.0
