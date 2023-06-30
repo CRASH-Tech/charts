@@ -1,14 +1,10 @@
-deploy:
-  enabled: false ### FALSE FOR FIRST RUN
-  repo: https://gitlab.example.domain/infra/deploy.git
-  ref: master
-  projects:
-    infra:
-      admins:
-        - admins
-  registry: harbor.example.domain/images
-  werfSyncServer: https://werf-sync.example.domain
-  cluster: k-root
+apps: ### COMMENT FOR FIRST INSTALL
+  # deploy:
+  #   repo: ssh://git@10.171.120.250:30000/kubernetes/deploy.git
+  #   ref: master
+  #   cluster: in-cluster
+  #   groups:
+  #     - admins
 
 werf-vault-sync:
   enabled: true
@@ -142,7 +138,7 @@ argo-cd:
             name: cmp-werf
           - mountPath: /home/argocd/.local
             name: cmp-werf-local
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always  #TODO: IfNotPresent
         securityContext:
           capabilities:
             drop:
@@ -178,21 +174,6 @@ argo-cd:
       allowPrivilegeEscalation: true
       readOnlyRootFilesystem: false
       runAsUser: 1000
-
-    webhook:
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: int
-        hosts:
-          - argocd-appset.example.domain
-        paths:
-          - /api/webhook
-        pathType: Prefix
-        tls:
-          - secretName: example.domain
-            hosts:
-              - argo-cd-appset.example.domain
 
   notifications:
     enabled: true
