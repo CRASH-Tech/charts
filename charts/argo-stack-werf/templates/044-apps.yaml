@@ -1,3 +1,4 @@
+{{- if $.Values.installCrs }}
 {{- range $app, $appData := .Values.apps }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -81,4 +82,5 @@ spec:
         name: {{ $appData.cluster }}
         namespace: {{ $.Release.Namespace }}
 ---
+{{- end }}
 {{- end }}

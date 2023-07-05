@@ -8,5 +8,8 @@ dependencies:
 - name: werf-vault-sync
   repository: https://crash-tech.github.io/charts
   version: 1.0.0
-digest: sha256:ca8fa4365344105d1b86ef3dd39c72bc230799af8ec53ca06cc17c4fd6b2b867
-generated: "2023-06-09T21:06:28.615044233Z"
+- name: external-secrets
+  repository: https://charts.external-secrets.io
+  version: 0.9.0
+digest: sha256:4ebce521db10ac0cfc26e6e1520e69bb4f5c3917946bb6244989a2d79b1166e0
+generated: "2023-07-05T17:59:47.238688218Z"

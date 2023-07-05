@@ -1,10 +1,32 @@
-apps: ### COMMENT FOR FIRST INSTALL
+installCrs: true # DISABLE FOR FIRST INSTALL
+
+apps:
   # deploy:
   #   repo: ssh://git@10.171.120.250:30000/kubernetes/deploy.git
   #   ref: master
   #   cluster: in-cluster
   #   groups:
   #     - admins
+
+secretStores:
+  # - name: vault-xfix
+  #   server: http://vault.vault:8200
+  #   tenant: xfix
+  #   authMethod: k-root
+  #   role: xfix_argo-stack
+
+clusters:
+  # - name: k-root
+  #   secretStore: vault-xfix
+  #   key: infra/kubernetes/clusters/k-root
+
+registries:
+  # - name: harbor
+  #   secretStore: vault-xfix
+  #   key: infra/registries/harbor
+  # - name: gitlab
+  #   secretStore: vault-xfix
+  #   key: infra/registries/gitlab
 
 werf-vault-sync:
   enabled: true
@@ -333,3 +355,33 @@ gitlab-runner:
     allowPrivilegeEscalation: true
     readOnlyRootFilesystem: false
     runAsUser: 0
+
+external-secrets:
+  replicaCount: 1
+  installCRDs: true
+
+  metrics:
+    service:
+      enabled: true
+      port: 8080
+      annotations: {}
+
+  webhook:
+    create: true
+    replicaCount: 1
+
+    metrics:
+      service:
+        enabled: true
+        port: 8080
+        annotations: {}
+
+  certController:
+    create: true
+    replicaCount: 1
+
+    metrics:
+      service:
+        enabled: true
+        port: 8080
+        annotations: {}

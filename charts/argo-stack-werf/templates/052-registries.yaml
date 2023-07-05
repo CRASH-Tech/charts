@@ -1,0 +1,24 @@
+{{- if $.Values.installCrs }}
+{{- range $registry := $.Values.registries }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ printf "registry-%s" $registry.name }}
+spec:
+  refreshInterval: "60s"
+  secretStoreRef:
+    name: {{ $registry.secretStore }}
+    kind: SecretStore
+  target:
+    name: {{ printf "registry-%s" $registry.name }}
+    template:
+      engineVersion: v2
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: repo-creds
+  dataFrom:
+    - extract:
+        key: {{ $registry.key }}
+---
+{{- end }}
+{{- end }}
