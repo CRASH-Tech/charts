@@ -74,10 +74,12 @@ spec:
               value: mode=deploy
             - name: WERF_SKIP_DEPENDENCIES_REPO_REFRESH
               value: "true"
-            - name: WERF_REPO_DISABLED
-              value: "true"
             - name: WERF_LOOSE_GITERMINISM
               value: "true"
+            {{- range $k, $v := $appData.envVars }}
+            - name: {{ $k }}
+              value: "{{ $v }}"
+            {{- end }}
       destination:
         name: {{ $appData.cluster }}
         namespace: {{ $.Release.Namespace }}
