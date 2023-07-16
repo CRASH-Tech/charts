@@ -2,14 +2,8 @@ dependencies:
 - name: argo-cd
   repository: https://argoproj.github.io/argo-helm
   version: 5.36.1
-- name: gitlab-runner
-  repository: https://charts.gitlab.io
-  version: 0.53.2
-- name: werf-vault-sync
-  repository: https://crash-tech.github.io/charts
-  version: 1.0.0
 - name: external-secrets
   repository: https://charts.external-secrets.io
   version: 0.9.0
-digest: sha256:4ebce521db10ac0cfc26e6e1520e69bb4f5c3917946bb6244989a2d79b1166e0
-generated: "2023-07-05T17:59:47.238688218Z"
+digest: sha256:6a09291bc64d2c9c0cb82c998f491b83537a1393eb44dc21454476abc6cc28d3
+generated: "2023-07-16T21:01:57.218541086Z"

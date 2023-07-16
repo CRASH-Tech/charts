@@ -28,14 +28,6 @@ registries:
   #   secretStore: vault-xfix
   #   key: infra/registries/gitlab
 
-werf-vault-sync:
-  enabled: true
-  ingress:
-    ingressClass: int
-    vaultHost: werf-vault.example.domain
-    syncHost: werf-sync.example.domain
-    tlsSecret: example.domain
-
 argo-cd:
   configs:
     cm:
@@ -303,58 +295,6 @@ argo-cd:
           send:
           - app-out-of-sync
           when: app.status.sync.status in ['OutOfSync']
-
-gitlab-runner:
-  enabled: true
-  replicas: 1
-  gitlabUrl: https://gitlab.example.domain/
-
-  rbac:
-    create: false
-    serviceAccountName: gitlab-runner
-    podSecurityPolicy:
-      enabled: true
-      resourceNames:
-        - gitlab-runner
-
-  metrics:
-    enabled: false
-
-  service:
-    enabled: true
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/path: "/metrics"
-      prometheus.io/port: "9252"
-
-  runners:
-    config: |
-      [[runners]]
-        pre_build_script = "source gitlab_werf_handler"
-        [runners.kubernetes]
-          namespace = "gitlab-runner"
-          image = "crashntech/gitlab-runner-werf:1.0.0"
-          service_account = "ci"
-          [runners.kubernetes.node_selector]
-            "node-role.kubernetes.io/werf-runner" = ""
-          [[runners.kubernetes.volumes.host_path]]
-            name = "werf-cache"
-            mount_path = "/var/lib/containers"
-            host_path = "/cache"
-            read_only = false
-
-    tags: "werf"
-    privileged: true
-
-  securityContext:
-    capabilities:
-      drop:
-        - all
-    privileged: true
-    runAsNonRoot: false
-    allowPrivilegeEscalation: true
-    readOnlyRootFilesystem: false
-    runAsUser: 0
 
 external-secrets:
   replicaCount: 1
