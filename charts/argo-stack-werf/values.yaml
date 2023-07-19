@@ -28,6 +28,11 @@ registries:
   #   secretStore: vault-xfix
   #   key: infra/registries/gitlab
 
+oidc:
+  enabled: "false"
+  # secretStore: vault-xfix
+  # key: infra/argocd/oidc
+
 argo-cd:
   configs:
     cm:
@@ -43,8 +48,8 @@ argo-cd:
       oidc.config: |
         name: OpenID
         issuer: https://auth.example.domain/application/o/argocd/
-        clientID:
-        clientSecret:
+        clientID: $argocd-oidc-secret:oidc.auth0.clientID
+        clientSecret: $argocd-oidc-secret:oidc.auth0.clientSecret
         requestedIDTokenClaims:
           groups:
             essential: true
