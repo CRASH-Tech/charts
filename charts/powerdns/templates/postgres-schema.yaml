@@ -1,3 +1,4 @@
+{{- if eq (index (.Values) "postgresql-ha").enabled "true" }}
 kind: Secret
 apiVersion: v1
 metadata:
@@ -103,3 +104,4 @@ stringData:
     );
 
     CREATE UNIQUE INDEX namealgoindex ON tsigkeys(name, algorithm);
+{{- end }}
