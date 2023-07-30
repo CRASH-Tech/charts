@@ -6,6 +6,7 @@ global:
     pdnsApiKey: changeMe
 
 postgresql-ha:
+  enabled: "true"
   postgresql:
     database: pdns
     syncReplication: true
