@@ -84,5 +84,13 @@ spec:
         name: {{ $appData.cluster }}
         namespace: {{ $.Release.Namespace }}
 ---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $appFullName }}
+automountServiceAccountToken: false
+
+---
 {{- end }}
 {{- end }}
