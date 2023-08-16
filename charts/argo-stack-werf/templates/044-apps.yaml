@@ -83,6 +83,11 @@ spec:
       destination:
         name: {{ $appData.cluster }}
         namespace: {{ $.Release.Namespace }}
+      ignoreDifferences:
+        - group: '*'
+          kind: '*'
+          jsonPointers:
+            - /metadata/annotations/werf.io~1version
 ---
 
 apiVersion: v1
