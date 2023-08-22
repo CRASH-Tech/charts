@@ -60,6 +60,8 @@ spec:
         path: "."
         plugin:
           env:
+            - name: CLUSTER
+              value: {{ $appData.cluster }}
             - name: RELEASE
               value: '{{ $app }}-{{ `{{ index (splitList "." .path.filenameNormalized) 1 }}` }}'
             - name: WERF_ENV
