@@ -143,7 +143,7 @@ argo-cd:
       runAsUser: 0
     extraContainers:
       - name: werf
-        image: crashntech/argocd-cmp-werf:1.1.3
+        image: crashntech/argocd-cmp-werf:1.1.4
         command: [/var/run/argocd/argocd-cmp-server]
         args: ["--loglevel", "debug"]
         volumeMounts:

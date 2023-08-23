@@ -1,9 +1,9 @@
 dependencies:
 - name: argo-cd
   repository: https://argoproj.github.io/argo-helm
-  version: 5.36.1
+  version: 5.43.5
 - name: external-secrets
   repository: https://charts.external-secrets.io
   version: 0.9.0
-digest: sha256:6a09291bc64d2c9c0cb82c998f491b83537a1393eb44dc21454476abc6cc28d3
-generated: "2023-07-16T21:01:57.218541086Z"
+digest: sha256:30a72760716f47cdbe3f69149d91819ed22dfc89149336460b5f1eb6b7f2e1d1
+generated: "2023-08-23T12:27:25.181276424Z"
