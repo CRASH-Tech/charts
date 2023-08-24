@@ -99,7 +99,7 @@ argo-cd:
       service:
         annotations:
           prometheus.io/path: "/metrics"
-          prometheus.io/port: "8082"
+          prometheus.io/port: "8083"
           prometheus.io/scrape: "true"
 
     ingress:
