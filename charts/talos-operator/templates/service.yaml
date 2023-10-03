@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "{{ .Release.Name }}-talos"
+  {{- if .Values.service.labels }}
+  labels:
+    {{- range $k, $v := .Values.service.labels }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.service.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    {{- include "talos-operator.selectorLabels" . | nindent 6 }}
+  type: {{ .Values.service.type }}
+  {{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  {{- end }}

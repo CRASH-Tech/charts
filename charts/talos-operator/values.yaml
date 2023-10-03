@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: crashntech/dhcp-operator
+  repository: crashntech/talos-operator
   pullPolicy: IfNotPresent
-  tag: 0.0.2
+  tag: 0.0.1
 
 imagePullSecrets: []
 nameOverride: ""
@@ -36,8 +36,7 @@ affinity: {}
 
 existingConfigSecret: ""
 config:
-  dhcpPort: 6767
-  pxePort: 8080
+  listen: :8080
   log:
     level: debug
     format: text
@@ -46,5 +45,5 @@ service:
   annotations:
     metallb.universe.tf/address-pool: int
   type: LoadBalancer
-  loadBalancerIP: 10.171.130.1
+  loadBalancerIP: 10.171.130.7
   externalTrafficPolicy: Local

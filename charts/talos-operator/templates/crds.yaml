@@ -1,0 +1,174 @@
+kind: CustomResourceDefinition
+apiVersion: apiextensions.k8s.io/v1
+metadata:
+  name: machine.talos.xfix.org
+  labels:
+    app: talos-operator
+spec:
+  group: talos.xfix.org
+  names:
+    plural: machine
+    singular: machines
+    kind: Machine
+    listKind: MachineList
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: Server is the Schema for the servers API.
+          type: object
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: ServerSpec defines the desired state of Server.
+              type: object
+              required:
+                - host
+                - config
+                - bootstrap
+              properties:
+                host:
+                  type: string
+                config:
+                  type: string
+                bootstrap:
+                  type: boolean
+                protected:
+                  type: boolean
+                  default: false
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+            status:
+              type: object
+              properties:
+                bootstrapped:
+                  type: boolean
+                confighash:
+                  type: string
+                lastapplyfail:
+                  type: boolean
+                etcd:
+                  type: string
+                apid:
+                  type: string
+                kubelet:
+                  type: string
+                containerd:
+                  type: string
+                cri:
+                  type: string
+                machined:
+                  type: string
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: host
+          type: string
+          jsonPath: .spec.host
+        - name: config
+          type: string
+          jsonPath: .spec.config
+        - name: Bootstrap
+          type: string
+          jsonPath: .spec.bootstrap
+        - name: Protected
+          type: string
+          jsonPath: .spec.protected
+        - name: configfail
+          type: string
+          jsonPath: .status.lastapplyfail
+        - name: etcd
+          type: string
+          jsonPath: .status.etcd
+        - name: apid
+          type: string
+          jsonPath: .status.apid
+        - name: kubelet
+          type: string
+          jsonPath: .status.kubelet
+        - name: containerd
+          type: string
+          jsonPath: .status.containerd
+        - name: cri
+          type: string
+          jsonPath: .status.cri
+        - name: machined
+          type: string
+          jsonPath: .status.machined
+  conversion:
+    strategy: None
+
+---
+
+kind: CustomResourceDefinition
+apiVersion: apiextensions.k8s.io/v1
+metadata:
+  name: machineselector.talos.xfix.org
+  labels:
+    app: talos-operator
+spec:
+  group: talos.xfix.org
+  names:
+    plural: machineselector
+    singular: machineselectors
+    kind: MachineSelector
+    listKind: MachineSelectorList
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: Server is the Schema for the servers API.
+          type: object
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: ServerSpec defines the desired state of Server.
+              type: object
+              required:
+                - config
+                - params
+              properties:
+                config:
+                  type: string
+                bootstrap:
+                  type: boolean
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: template
+          type: string
+          jsonPath: .spec.template
+  conversion:
+    strategy: None
