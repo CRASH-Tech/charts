@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: crashntech/dhcp-operator
+  pullPolicy: IfNotPresent
+  tag: 0.0.1
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+existingConfigSecret: ""
+config:
+  dhcpPort: 6767
+  pxePort: 8080
+  log:
+    level: debug
+    format: text
+
+service:
+  annotations:
+    metallb.universe.tf/address-pool: int
+  type: LoadBalancer
+  loadBalancerIP: 10.171.130.1
+  externalTrafficPolicy: Local
