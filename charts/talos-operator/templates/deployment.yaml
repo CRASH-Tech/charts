@@ -6,6 +6,8 @@ metadata:
     {{- include "talos-operator.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "talos-operator.selectorLabels" . | nindent 6 }}
@@ -37,9 +39,6 @@ spec:
           - name: config
             mountPath: /app/config.yaml
             subPath: config.yaml
-          readinessProbe:
-            tcpSocket:
-              port: 8080
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

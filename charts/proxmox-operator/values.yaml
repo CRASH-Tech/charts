@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crashntech/proxmox-operator
   pullPolicy: IfNotPresent
-  tag: 0.1.3
+  tag: 0.1.4
 
 imagePullSecrets: []
 nameOverride: ""
@@ -34,9 +34,16 @@ tolerations: []
 
 affinity: {}
 
+service:
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+
 existingConfigSecret: ""
 config:
   {}
+  # listen: :8080
   # log:
   #   level: info
   #   format: text

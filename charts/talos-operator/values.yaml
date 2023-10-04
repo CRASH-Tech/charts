@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crashntech/talos-operator
   pullPolicy: IfNotPresent
-  tag: 0.0.1
+  tag: 0.0.3
 
 imagePullSecrets: []
 nameOverride: ""
@@ -43,7 +43,9 @@ config:
 
 service:
   annotations:
-    metallb.universe.tf/address-pool: int
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
   type: LoadBalancer
   loadBalancerIP: 10.171.130.7
   externalTrafficPolicy: Local

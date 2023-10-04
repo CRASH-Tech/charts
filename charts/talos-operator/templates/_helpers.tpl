@@ -51,6 +51,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Service selector labels
+*/}}
+{{- define "talos-operator.serviceSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "talos-operator.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+leader: "true"
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "talos-operator.serviceAccountName" -}}

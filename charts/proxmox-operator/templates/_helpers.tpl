@@ -51,6 +51,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Service selector labels
+*/}}
+{{- define "proxmox-operator.serviceSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "proxmox-operator.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+leader: "true"
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "proxmox-operator.serviceAccountName" -}}

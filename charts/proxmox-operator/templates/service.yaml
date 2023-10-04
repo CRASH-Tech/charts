@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: "{{ .Release.Name }}-talos"
+  name: "{{ .Release.Name }}-proxmox"
   {{- if .Values.service.labels }}
   labels:
     {{- range $k, $v := .Values.service.labels }}
@@ -18,14 +18,8 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 8080
   selector:
-    {{- include "talos-operator.serviceSelectorLabels" . | nindent 6 }}
-  type: {{ .Values.service.type }}
-  {{- if .Values.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
-  {{- end }}
-  {{- if .Values.service.externalTrafficPolicy }}
-  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
-  {{- end }}
+    {{- include "proxmox-operator.serviceSelectorLabels" . | nindent 6 }}
+  type: ClusterIP

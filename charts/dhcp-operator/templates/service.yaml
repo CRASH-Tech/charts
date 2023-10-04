@@ -25,7 +25,7 @@ spec:
       port: 80
       targetPort: 8080
   selector:
-    {{- include "dhcp-operator.selectorLabels" . | nindent 6 }}
+    {{- include "dhcp-operator.serviceSelectorLabels" . | nindent 6 }}
   type: {{ .Values.service.type }}
   {{- if .Values.service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
