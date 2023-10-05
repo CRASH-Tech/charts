@@ -46,6 +46,9 @@ service:
     prometheus.io/path: /metrics
     prometheus.io/port: "8080"
     prometheus.io/scrape: "true"
-  type: LoadBalancer
-  loadBalancerIP: 10.171.130.7
-  externalTrafficPolicy: Local
+  type: ClusterIP
+
+ingress:
+  ingressClassName: int
+  secretName: example.domain
+  host: talos.example.domain

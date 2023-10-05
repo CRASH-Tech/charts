@@ -1,0 +1,27 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: "{{ .Release.Name }}-talos"
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- range $k, $v := .Values.ingress.annotations }}
+    {{ $k }}: {{ tpl $v $ | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.secretName }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Release.Name }}-talos"
+                port:
+                  number: 8080
