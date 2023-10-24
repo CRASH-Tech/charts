@@ -1,12 +1,5 @@
-installCrs: true # DISABLE FOR FIRST INSTALL
-
-apps:
-  # deploy:
-  #   repo: ssh://git@10.171.120.250:30000/kubernetes/deploy.git
-  #   ref: master
-  #   cluster: in-cluster
-  #   groups:
-  #     - admins
+global:
+  installCrs: true # DISABLE FOR FIRST INSTALL
 
 secretStores:
   # - name: vault-xfix
