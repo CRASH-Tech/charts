@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crashntech/talos-operator
   pullPolicy: IfNotPresent
-  tag: 0.0.4
+  tag: 0.0.5
 
 imagePullSecrets: []
 nameOverride: ""
