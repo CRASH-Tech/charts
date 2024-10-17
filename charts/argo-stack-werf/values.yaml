@@ -130,6 +130,8 @@ argo-cd:
             name: cmp-werf
           - mountPath: /home/argocd/.local
             name: cmp-werf-local
+          - mountPath: /tmp
+            name: cmp-tmp
         imagePullPolicy: IfNotPresent
         securityContext:
           capabilities:
@@ -146,6 +148,8 @@ argo-cd:
         name: cmp-werf
       - name: cmp-werf-local
         emptyDir: {}
+      - emptyDir: {}
+        name: cmp-tmp
 
   applicationSet:
     enabled: true
