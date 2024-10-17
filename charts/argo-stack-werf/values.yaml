@@ -1,5 +1,6 @@
 global:
   installCrs: true # DISABLE FOR FIRST INSTALL
+  domain: argocd.example.domain
 
 secretStores:
   # - name: vault-xfix
@@ -87,32 +88,12 @@ argo-cd:
 
   server:
     replicas: 1
-    metrics:
-      enabled: true
-      service:
-        annotations:
-          prometheus.io/path: "/metrics"
-          prometheus.io/port: "8083"
-          prometheus.io/scrape: "true"
-
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: int
-        nginx.org/proxy-connect-timeout: 300s
-        nginx.org/proxy-read-timeout: 300s
-        nginx.org/proxy-send-timeout: 300s
-        nginx.org/client-max-body-size: "100m"
-      hosts:
-        - argocd.example.domain
-      paths:
-        - /
-      pathType: Prefix
-      tls:
-        - secretName: example.domain
-          hosts:
-            - argocd.example.domain
-      https: true
+      path: /
+      tls: true
 
   repoServer:
     replicas: 1
