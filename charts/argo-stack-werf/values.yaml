@@ -159,8 +159,10 @@ argo-cd:
         name: cmp-werf
       - name: cmp-werf-local
         emptyDir: {}
+        medium: Memory
       - emptyDir: {}
         name: cmp-tmp
+        medium: Memory
 
   applicationSet:
     enabled: true
