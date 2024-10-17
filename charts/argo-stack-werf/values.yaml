@@ -87,11 +87,22 @@ argo-cd:
           prometheus.io/scrape: "true"
 
   server:
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "8083"
+          prometheus.io/scrape: "true"
     replicas: 1
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: int
+        nginx.org/proxy-connect-timeout: 300s
+        nginx.org/proxy-read-timeout: 300s
+        nginx.org/proxy-send-timeout: 300s
+        nginx.org/client-max-body-size: "100m"
       path: /
       tls: true
 

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: argo-stack-werf
-version: 7.6.10-1
+version: 7.6.10-2
 appVersion: 2.12.4
 dependencies:
   - name: argo-cd
