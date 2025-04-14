@@ -3,7 +3,7 @@ entries:
   argo-stack-werf:
   - apiVersion: v2
     appVersion: 2.12.4
-    created: "2025-04-13T21:06:11.457606394+03:00"
+    created: "2025-04-14T16:59:05.632607845+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -18,7 +18,7 @@ entries:
     version: 7.6.10
   - apiVersion: v2
     appVersion: 2.12.4
-    created: "2025-04-13T21:06:11.447549581+03:00"
+    created: "2025-04-14T16:59:05.612716087+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -33,7 +33,7 @@ entries:
     version: 7.6.10-4
   - apiVersion: v2
     appVersion: 2.12.4
-    created: "2025-04-13T21:06:11.437159238+03:00"
+    created: "2025-04-14T16:59:05.594877202+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -48,7 +48,7 @@ entries:
     version: 7.6.10-3
   - apiVersion: v2
     appVersion: 2.12.4
-    created: "2025-04-13T21:06:11.427722771+03:00"
+    created: "2025-04-14T16:59:05.575210299+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -63,7 +63,7 @@ entries:
     version: 7.6.10-2
   - apiVersion: v2
     appVersion: 2.12.4
-    created: "2025-04-13T21:06:11.417160012+03:00"
+    created: "2025-04-14T16:59:05.561210124+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -78,7 +78,7 @@ entries:
     version: 7.6.10-1
   - apiVersion: v2
     appVersion: 2.9.2
-    created: "2025-04-13T21:06:11.406542316+03:00"
+    created: "2025-04-14T16:59:05.541980588+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -93,7 +93,7 @@ entries:
     version: 2.9.2
   - apiVersion: v2
     appVersion: 2.9.1
-    created: "2025-04-13T21:06:11.396249834+03:00"
+    created: "2025-04-14T16:59:05.528909983+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -108,7 +108,7 @@ entries:
     version: 2.9.1
   - apiVersion: v2
     appVersion: 2.9.0
-    created: "2025-04-13T21:06:11.38637057+03:00"
+    created: "2025-04-14T16:59:05.508129531+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -123,7 +123,7 @@ entries:
     version: 2.9.0
   - apiVersion: v2
     appVersion: 2.8.6
-    created: "2025-04-13T21:06:11.376371875+03:00"
+    created: "2025-04-14T16:59:05.492123116+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -138,7 +138,7 @@ entries:
     version: 2.8.6
   - apiVersion: v2
     appVersion: 2.8.4
-    created: "2025-04-13T21:06:11.366903109+03:00"
+    created: "2025-04-14T16:59:05.477331341+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -153,7 +153,7 @@ entries:
     version: 2.0.0
   - apiVersion: v2
     appVersion: 2.8.4
-    created: "2025-04-13T21:06:11.357804831+03:00"
+    created: "2025-04-14T16:59:05.46197524+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -168,7 +168,7 @@ entries:
     version: 1.4.5
   - apiVersion: v2
     appVersion: 2.8.1
-    created: "2025-04-13T21:06:11.3484617+03:00"
+    created: "2025-04-14T16:59:05.445907716+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -183,7 +183,7 @@ entries:
     version: 1.4.2
   - apiVersion: v2
     appVersion: 2.8.1
-    created: "2025-04-13T21:06:11.338628836+03:00"
+    created: "2025-04-14T16:59:05.42510413+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -198,7 +198,7 @@ entries:
     version: 1.4.1
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.326244168+03:00"
+    created: "2025-04-14T16:59:05.405043499+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -213,7 +213,7 @@ entries:
     version: 1.3.5
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.317593022+03:00"
+    created: "2025-04-14T16:59:05.381900897+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -228,7 +228,7 @@ entries:
     version: 1.3.4
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.30879829+03:00"
+    created: "2025-04-14T16:59:05.367976021+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -243,7 +243,7 @@ entries:
     version: 1.3.3
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.299895106+03:00"
+    created: "2025-04-14T16:59:05.351558442+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -258,7 +258,7 @@ entries:
     version: 1.3.2
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.289814606+03:00"
+    created: "2025-04-14T16:59:05.334009186+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -273,7 +273,7 @@ entries:
     version: 1.3.1
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.280807239+03:00"
+    created: "2025-04-14T16:59:05.321019418+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -288,7 +288,7 @@ entries:
     version: 1.3.0
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.271130908+03:00"
+    created: "2025-04-14T16:59:05.303710879+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -303,7 +303,7 @@ entries:
     version: 1.2.9
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.262315186+03:00"
+    created: "2025-04-14T16:59:05.280371835+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -318,7 +318,7 @@ entries:
     version: 1.2.8
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.252414682+03:00"
+    created: "2025-04-14T16:59:05.25956896+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -333,7 +333,7 @@ entries:
     version: 1.2.7
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.242415895+03:00"
+    created: "2025-04-14T16:59:05.244675054+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -356,7 +356,7 @@ entries:
     version: 1.2.6
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.232331185+03:00"
+    created: "2025-04-14T16:59:05.232378816+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -376,7 +376,7 @@ entries:
     version: 1.2.3
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.224219845+03:00"
+    created: "2025-04-14T16:59:05.215760663+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -396,7 +396,7 @@ entries:
     version: 1.1.3
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.216081234+03:00"
+    created: "2025-04-14T16:59:05.201293785+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -416,7 +416,7 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.208185703+03:00"
+    created: "2025-04-14T16:59:05.181153501+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -436,7 +436,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.199837186+03:00"
+    created: "2025-04-14T16:59:05.164057816+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -456,7 +456,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 2.7.4
-    created: "2025-04-13T21:06:11.191861454+03:00"
+    created: "2025-04-14T16:59:05.145925247+03:00"
     dependencies:
     - name: argo-cd
       repository: https://argoproj.github.io/argo-helm
@@ -475,7 +475,7 @@ entries:
   dhcp-operator:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-13T21:06:11.458706816+03:00"
+    created: "2025-04-14T16:59:05.638061954+03:00"
     description: dhcp-operator
     digest: 12921957ba046a06cc91900eb3faaf0ae34549f891735c4c42d6daa35488d180
     name: dhcp-operator
@@ -485,7 +485,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2025-04-13T21:06:11.458534343+03:00"
+    created: "2025-04-14T16:59:05.637382629+03:00"
     description: dhcp-operator
     digest: 3e327cd73c62076a49c888ae8805f5362590615e6d92e8c2a3078aaf48cda9a2
     name: dhcp-operator
@@ -495,7 +495,7 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2025-04-13T21:06:11.458354455+03:00"
+    created: "2025-04-14T16:59:05.636358238+03:00"
     description: dhcp-operator
     digest: 2a51a486dd2ff233ff6d7e11a05adf3dc1c6ccbc4b90fd32a9da2a130cb7bdd3
     name: dhcp-operator
@@ -505,7 +505,7 @@ entries:
     version: 0.0.6
   - apiVersion: v2
     appVersion: 0.0.5
-    created: "2025-04-13T21:06:11.458181565+03:00"
+    created: "2025-04-14T16:59:05.635426995+03:00"
     description: dhcp-operator
     digest: 34f57da87c5756af769ab1b7a7d85c61767ffea584b46832eec68845c71c3727
     name: dhcp-operator
@@ -515,7 +515,7 @@ entries:
     version: 0.0.5
   - apiVersion: v2
     appVersion: 0.0.4
-    created: "2025-04-13T21:06:11.458005609+03:00"
+    created: "2025-04-14T16:59:05.634466277+03:00"
     description: dhcp-operator
     digest: a6c0bf75d328cc3c975c3b2794d1ef5bcbaf016c139de741d896fe32d9cef834
     name: dhcp-operator
@@ -525,7 +525,7 @@ entries:
     version: 0.0.4
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2025-04-13T21:06:11.45780888+03:00"
+    created: "2025-04-14T16:59:05.633731544+03:00"
     description: dhcp-operator
     digest: cc5f58b7c8b14f1f792038ed4a264fa7a5663f23df4427b73e5523fa3f655f9e
     name: dhcp-operator
@@ -535,7 +535,16 @@ entries:
     version: 0.0.1
   generic:
   - apiVersion: v2
-    created: "2025-04-13T21:06:11.460239786+03:00"
+    created: "2025-04-14T16:59:05.640438158+03:00"
+    description: generic
+    digest: 5a02c40b047a4dd99ade35f95f5ab97c7c8d699f3d3e5f145de254354d6aeff3
+    name: generic
+    type: application
+    urls:
+    - generic-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    created: "2025-04-14T16:59:05.640113037+03:00"
     description: generic
     digest: cd5b62b4c4d46fa3f901562905d2b749763f9f0d928ac9cbaa8c772e7d2d65f4
     name: generic
@@ -544,7 +553,7 @@ entries:
     - generic-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
-    created: "2025-04-13T21:06:11.460045064+03:00"
+    created: "2025-04-14T16:59:05.639669141+03:00"
     description: generic
     digest: a126ac39a9eb1621f242839377883229e09e5ddb471ab75d505f17c3fe7fc7c1
     name: generic
@@ -553,7 +562,7 @@ entries:
     - generic-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2025-04-13T21:06:11.459669946+03:00"
+    created: "2025-04-14T16:59:05.639090189+03:00"
     description: generic
     digest: 0a966388ed3a75bcc5c5c01e9e861d93ba0e5799a0026dce46bb2e75fcb52124
     name: generic
@@ -562,7 +571,7 @@ entries:
     - generic-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2025-04-13T21:06:11.458895856+03:00"
+    created: "2025-04-14T16:59:05.63863616+03:00"
     description: generic
     digest: 5dd1b7350a424a6ff6a661b6aed9def4b2a044a5445befa5696a75c616b908a2
     name: generic
@@ -573,7 +582,7 @@ entries:
   gitlab:
   - apiVersion: v2
     appVersion: 16.0.3
-    created: "2025-04-13T21:06:11.460475876+03:00"
+    created: "2025-04-14T16:59:05.641076555+03:00"
     digest: d7ed00d67e5264153af18998204724d07b8aa0db574092b96f67e838a9fb9970
     name: gitlab
     urls:
@@ -582,7 +591,7 @@ entries:
   gitlab-runner-werf:
   - apiVersion: v2
     appVersion: 0.53.2
-    created: "2025-04-13T21:06:11.461283893+03:00"
+    created: "2025-04-14T16:59:05.643509952+03:00"
     dependencies:
     - condition: gitlab-runner.enabled
       name: gitlab-runner
@@ -596,7 +605,7 @@ entries:
   local-path-provisioner:
   - apiVersion: v1
     appVersion: v0.0.33
-    created: "2025-04-13T21:06:11.461680947+03:00"
+    created: "2025-04-14T16:59:05.644770507+03:00"
     description: Use HostPath for persistent local storage with Kubernetes
     digest: 83b88014ce57cddbd804568fec37d505dd486d87164b0d95c3b8e5c6d50ca6f6
     home: https://github.com/rancher/local-path-provisioner
@@ -613,7 +622,7 @@ entries:
   powerdns:
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.494385525+03:00"
+    created: "2025-04-14T16:59:05.699164055+03:00"
     dependencies:
     - condition: postgresql-ha.enabled
       name: postgresql-ha
@@ -628,7 +637,7 @@ entries:
     version: 1.1.10
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.504369124+03:00"
+    created: "2025-04-14T16:59:05.713618119+03:00"
     dependencies:
     - condition: postgresql-ha.enabled
       name: postgresql-ha
@@ -643,7 +652,7 @@ entries:
     version: 1.1.9
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.501290833+03:00"
+    created: "2025-04-14T16:59:05.708667766+03:00"
     dependencies:
     - condition: postgresql-ha.enabled
       name: postgresql-ha
@@ -658,7 +667,7 @@ entries:
     version: 1.1.8
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.497368432+03:00"
+    created: "2025-04-14T16:59:05.704826916+03:00"
     dependencies:
     - condition: postgresql-ha.enabled
       name: postgresql-ha
@@ -673,7 +682,7 @@ entries:
     version: 1.1.7
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.49065161+03:00"
+    created: "2025-04-14T16:59:05.695124039+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -687,7 +696,7 @@ entries:
     version: 1.0.7
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.487691525+03:00"
+    created: "2025-04-14T16:59:05.69065621+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -701,7 +710,7 @@ entries:
     version: 1.0.6
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.484734275+03:00"
+    created: "2025-04-14T16:59:05.683496475+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -715,7 +724,7 @@ entries:
     version: 1.0.5
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.480692609+03:00"
+    created: "2025-04-14T16:59:05.675592368+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -729,7 +738,7 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.477769051+03:00"
+    created: "2025-04-14T16:59:05.667750057+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -743,7 +752,7 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.474129104+03:00"
+    created: "2025-04-14T16:59:05.663743161+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -757,7 +766,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.470855462+03:00"
+    created: "2025-04-14T16:59:05.656838061+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -771,7 +780,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.7.3
-    created: "2025-04-13T21:06:11.464716374+03:00"
+    created: "2025-04-14T16:59:05.649966764+03:00"
     dependencies:
     - name: postgresql-ha
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -786,7 +795,7 @@ entries:
   proxmox-operator:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-13T21:06:11.506097525+03:00"
+    created: "2025-04-14T16:59:05.716882549+03:00"
     description: proxmox-operator
     digest: a53f66c3caa0e09f438e49d2c7ba67b5687a254d0dd9f26c8e65f7fe3b97d9bf
     name: proxmox-operator
@@ -796,7 +805,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.1.5
-    created: "2025-04-13T21:06:11.505199414+03:00"
+    created: "2025-04-14T16:59:05.716448574+03:00"
     description: proxmox-operator
     digest: fe3084cbf8aa345d18bd0ca84201a495aa51cc4688c865cc3559e6411dc4f7f5
     name: proxmox-operator
@@ -806,7 +815,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.1.4
-    created: "2025-04-13T21:06:11.505032249+03:00"
+    created: "2025-04-14T16:59:05.715962264+03:00"
     description: proxmox-operator
     digest: d2e14e3133174708da7eb83754f04d8d19caa6f7d4a3f2be1f121e97fa5b7e37
     name: proxmox-operator
@@ -816,7 +825,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.1.3
-    created: "2025-04-13T21:06:11.504838365+03:00"
+    created: "2025-04-14T16:59:05.71547926+03:00"
     description: proxmox-operator
     digest: 6c3a19c23c4d7c503e4c50113f5bb7ea37c262ea18f1034b945d7d315208615b
     name: proxmox-operator
@@ -826,7 +835,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 0.1.2
-    created: "2025-04-13T21:06:11.504688713+03:00"
+    created: "2025-04-14T16:59:05.715009544+03:00"
     description: proxmox-operator
     digest: d8e634591052a15a3fc00d705f37dc80230211d08f93d0668c3ca04a1cc23194
     name: proxmox-operator
@@ -836,7 +845,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-04-13T21:06:11.504536806+03:00"
+    created: "2025-04-14T16:59:05.714318953+03:00"
     description: proxmox-operator
     digest: dd26e4ddfef4b5cd5c101f5fcbb5e6a925fd90ff175b7b027a86a17b7af66648
     name: proxmox-operator
@@ -847,7 +856,7 @@ entries:
   talos-dhcp-server:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-04-13T21:06:11.507102117+03:00"
+    created: "2025-04-14T16:59:05.719636394+03:00"
     digest: c69a57534b13f420b79c6fd91fa87b7abd638a5e52955e55b8a8b38a54cbd9b2
     name: talos-dhcp-server
     type: application
@@ -856,7 +865,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-04-13T21:06:11.506901362+03:00"
+    created: "2025-04-14T16:59:05.718888001+03:00"
     digest: b3d3127acf07f7f154bc31ff4067ccb9a39fd9429f6e406038a34390a8157965
     name: talos-dhcp-server
     type: application
@@ -865,7 +874,7 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: 0.0.9
-    created: "2025-04-13T21:06:11.506668503+03:00"
+    created: "2025-04-14T16:59:05.71841729+03:00"
     digest: 0cb654fc8a530907de3086e63930e63b5e8c75051b1e8844458ca362eaf8f45f
     name: talos-dhcp-server
     type: application
@@ -874,7 +883,7 @@ entries:
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2025-04-13T21:06:11.506472487+03:00"
+    created: "2025-04-14T16:59:05.717965108+03:00"
     digest: d2907441262aa35172505c3e1949d91b3ecfe86fc4d98328a94fb82b70a5f21e
     name: talos-dhcp-server
     type: application
@@ -883,7 +892,7 @@ entries:
     version: 0.0.7
   - apiVersion: v2
     appVersion: 0.0.6
-    created: "2025-04-13T21:06:11.506291444+03:00"
+    created: "2025-04-14T16:59:05.71753735+03:00"
     digest: 71c773b55f030d7873fb07baeb3a8932d6bc1f1c0a9774e144d0905329bbf6bc
     name: talos-dhcp-server
     type: application
@@ -893,7 +902,7 @@ entries:
   talos-operator:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-13T21:06:11.507843496+03:00"
+    created: "2025-04-14T16:59:05.722386525+03:00"
     description: talos-operator
     digest: 2288471ce285258123523c840ff376109bb36ec3cf6eb11837e7412a663bc64d
     name: talos-operator
@@ -903,7 +912,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.0.5
-    created: "2025-04-13T21:06:11.507644114+03:00"
+    created: "2025-04-14T16:59:05.721742042+03:00"
     description: talos-operator
     digest: 4343080edf66d8ef558c7dedf4457e585ffac2c6fd1513df7f63a51f6eb6d073
     name: talos-operator
@@ -913,7 +922,7 @@ entries:
     version: 0.0.5
   - apiVersion: v2
     appVersion: 0.0.4
-    created: "2025-04-13T21:06:11.507466214+03:00"
+    created: "2025-04-14T16:59:05.721286379+03:00"
     description: talos-operator
     digest: d57c9430ad9e5b95579f6744ddaa23b4d427b901d251c9d1e87f8d88cef25235
     name: talos-operator
@@ -923,7 +932,7 @@ entries:
     version: 0.0.4
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2025-04-13T21:06:11.507288904+03:00"
+    created: "2025-04-14T16:59:05.720613795+03:00"
     description: talos-operator
     digest: 961aeda18c175f14bae0bba296c17cdad68db590115ed05f7fc5f2c77a3d75f5
     name: talos-operator
@@ -934,10 +943,10 @@ entries:
   werf-vault-sync:
   - apiVersion: v2
     appVersion: 1.2.240
-    created: "2025-04-13T21:06:11.507945928+03:00"
+    created: "2025-04-14T16:59:05.722835703+03:00"
     digest: 94c1ffcbfa4c8049a85c0aedf586a81f35b7082d9ac7009702a8965b2e929b03
     name: werf-vault-sync
     urls:
     - werf-vault-sync-1.0.0.tgz
     version: 1.0.0
-generated: "2025-04-13T21:06:11.182541558+03:00"
+generated: "2025-04-14T16:59:05.133542754+03:00"

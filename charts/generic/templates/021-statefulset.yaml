@@ -85,10 +85,10 @@ spec:
           image: {{ tpl $container.image $ }}
           imagePullPolicy: {{ $container.pullPolicy | default "IfNotPresent" }}
           {{- if $container.command }}
-          command: {{ $container.command }}
+          command: {{ $container.command | toYaml | nindent 12 }}
           {{- end }}
           {{- if $container.args }}
-          args: {{ $container.args }}
+          args: {{ $container.args | toYaml | nindent 12 }}
           {{- end }}
           {{- if $container.env }}
           env: {{ $container.env | toYaml | nindent 12 }}
