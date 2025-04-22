@@ -68,13 +68,13 @@ spec:
         - name: {{ $volume.name }}
           configMap:
             name: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $volume.configMap.name }}"
-            defaultMode: defaultMode: "{{ $volume.configMap.defaultMode | default 420 }}"
+            defaultMode: {{ $volume.configMap.defaultMode | default 420 }}
         {{- end }}
         {{- if $volume.secret }}
         - name: {{ $volume.name }}
           secret:
             secretName: "{{ printf "%s-%s" $.Release.Name $.Values.release.name }}-{{ $volume.secret.secretName }}"
-            defaultMode: "{{ $volume.secret.defaultMode | default 420 }}"
+            defaultMode: {{ $volume.secret.defaultMode | default 420 }}
         {{- end }}
         {{- if $volume.hostPath }}
         - name: {{ $volume.name }}
