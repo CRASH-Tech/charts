@@ -125,7 +125,7 @@ spec:
           readinessProbe: {{ $container.readinessProbe | toYaml | nindent 12 }}
           {{- end }}
           {{- if $container.livenessProbe }}
-          livenessProbe: {{ $container.readinessProbe | toYaml | nindent 12 }}
+          livenessProbe: {{ $container.livenessProbe | toYaml | nindent 12 }}
           {{- end }}
           {{- if $container.securityContext }}
           securityContext: {{ $container.securityContext | toYaml | nindent 12 }}
