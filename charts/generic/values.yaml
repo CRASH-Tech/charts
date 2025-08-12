@@ -95,6 +95,12 @@
 #           port: 8080
 #         initialDelaySeconds: 15
 #         periodSeconds: 20
+#       startupProbe: # optional
+#         tcpSocket:
+#           port: 8080
+#         initialDelaySeconds: 15
+#         periodSeconds: 20
+#         failureThreshold: 60
 #       securityContext: # optional
 #         runAsUser: 1000
 #         runAsGroup: 1000
