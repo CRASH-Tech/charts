@@ -1,117 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-gitlab-http
+  name: {{ include "gitlab.fullname" . }}
   labels:
-    app: {{ .Release.Name }}-gitlab
-    {{- range $k, $v := .Values.services.http.labels }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- if .Values.services.annotations }}
-  annotations:
-    {{- range $k, $v := .Values.services.http.annotations }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- end }}
+    {{- include "gitlab.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.services.http.type }}
+  type: ClusterIP
   ports:
-    - name: http
+    - port: {{ .Values.ports.http }}
+      targetPort: http
       protocol: TCP
-      appProtocol: http
-      port: {{ .Values.services.http.port }}
-      targetPort: {{ .Values.services.http.containerPort }}
-  selector:
-    app: {{ .Release.Name }}-gitlab
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Release.Name }}-gitlab-https
-  labels:
-    app: {{ .Release.Name }}-gitlab
-    {{- range $k, $v := .Values.services.https.labels }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- if .Values.services.annotations }}
-  annotations:
-    {{- range $k, $v := .Values.services.https.annotations }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- end }}
-spec:
-  type: {{ .Values.services.https.type }}
-  ports:
-    - name: https
+      name: http
+    - port: {{ .Values.ports.pages }}
+      targetPort: pages
       protocol: TCP
-      appProtocol: https
-      port: {{ .Values.services.https.port }}
-      targetPort: {{ .Values.services.https.containerPort }}
-  selector:
-    app: {{ .Release.Name }}-gitlab
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Release.Name }}-gitlab-ssh
-  labels:
-    app: {{ .Release.Name }}-gitlab
-    {{- range $k, $v := .Values.services.ssh.labels }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- if .Values.services.annotations }}
-  annotations:
-    {{- range $k, $v := .Values.services.ssh.annotations }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- end }}
-spec:
-  type: {{ .Values.services.ssh.type }}
-  {{- if eq .Values.services.ssh.type "LoadBalancer" }}
-  externalTrafficPolicy: {{ .Values.services.ssh.externalTrafficPolicy }}
-  loadBalancerIP: {{ .Values.services.ssh.loadBalancerIP }}
-  {{- end }}
-  ports:
-    - name: ssh
+      name: pages
+    - port: {{ .Values.ports.registry }}
+      targetPort: registry
       protocol: TCP
-      appProtocol: ssh
-      port: {{ .Values.services.ssh.port }}
-      targetPort: {{ .Values.services.ssh.containerPort }}
-  selector:
-    app: {{ .Release.Name }}-gitlab
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Release.Name }}-gitlab-registry
-  labels:
-    app: {{ .Release.Name }}-gitlab
-    {{- range $k, $v := .Values.services.registry.labels }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- if .Values.services.annotations }}
-  annotations:
-    {{- range $k, $v := .Values.services.registry.annotations }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- end }}
-spec:
-  type: {{ .Values.services.registry.type }}
-  {{- if eq .Values.services.registry.type "LoadBalancer" }}
-  externalTrafficPolicy: {{ .Values.services.registry.externalTrafficPolicy }}
-  loadBalancerIP: {{ .Values.services.registry.loadBalancerIP }}
-  {{- end }}
-  ports:
-    - name: registry
+      name: registry
+    - port: {{ .Values.ports.ssh }}
+      targetPort: ssh
       protocol: TCP
-      appProtocol: registry
-      port: {{ .Values.services.registry.port }}
-      targetPort: {{ .Values.services.registry.containerPort }}
+      name: ssh
   selector:
-    app: {{ .Release.Name }}-gitlab
+    {{- include "gitlab.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "gitlab.fullname" . }}
+  labels:
+    {{- include "gitlab.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "gitlab.fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "gitlab.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gitlab.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/gitlab-config: {{ .Values.gitlab.config | sha256sum | quote }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      terminationGracePeriodSeconds: 300
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.ports.http }}
+              protocol: TCP
+            - name: pages
+              containerPort: {{ .Values.ports.pages }}
+              protocol: TCP
+            - name: registry
+              containerPort: {{ .Values.ports.registry }}
+              protocol: TCP
+              {{- if .Values.registryHostPort }}
+              hostPort: {{ .Values.ports.registry }}
+              {{- end }}
+            - name: ssh
+              containerPort: {{ .Values.ports.ssh }}
+              protocol: TCP
+              {{- if .Values.sshHostPort }}
+              hostPort: {{ .Values.ports.ssh }}
+              {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: shmem
+            - name: config
+              mountPath: /etc/gitlab
+            - name: logs
+              mountPath: /var/log/gitlab
+            - name: data
+              mountPath: /var/opt/gitlab
+            - name: gitlab-config-secret
+              mountPath: /etc/gitlab/gitlab.rb
+              subPath: gitlab.rb
+              readOnly: true
+      volumes:
+        - name: shmem
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+        - name: gitlab-config-secret
+          secret:
+            secretName: {{ include "gitlab.fullname" . }}-config
+  volumeClaimTemplates:
+    - metadata:
+        name: config
+      spec:
+        accessModes: [ "{{ .Values.persistence.config.accessMode }}" ]
+        {{- if .Values.persistence.config.storageClassName }}
+        storageClassName: {{ .Values.persistence.config.storageClassName | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.config.size }}
+    - metadata:
+        name: logs
+      spec:
+        accessModes: [ "{{ .Values.persistence.logs.accessMode }}" ]
+        {{- if .Values.persistence.logs.storageClassName }}
+        storageClassName: {{ .Values.persistence.logs.storageClassName | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.logs.size }}
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "{{ .Values.persistence.data.accessMode }}" ]
+        {{- if .Values.persistence.data.storageClassName }}
+        storageClassName: {{ .Values.persistence.data.storageClassName | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.data.size }}

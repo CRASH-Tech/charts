@@ -1,43 +1,41 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-gitlab
-  {{- if .Values.ingress.labels }}
+  name: {{ include "gitlab.fullname" . }}
   labels:
-    {{- range $k, $v := .Values.ingress.labels }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
-  {{- end }}
-  {{- if .Values.ingress.annotations }}
+    {{- include "gitlab.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- range $k, $v := .Values.ingress.annotations }}
-    {{ $k }}: {{ tpl $v $ | quote }}
-    {{- end }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.ingress.spec.ingressClassName }}
-  ingressClassName: {{ .Values.ingress.spec.ingressClassName }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- if .Values.ingress.spec.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
-    {{- range $tlsData := .Values.ingress.spec.tls }}
+    {{- range .Values.ingress.tls }}
     - hosts:
-        {{- range $host := $tlsData.hosts }}
-        - {{ tpl $host $ }}
+        {{- range .hosts }}
+        - {{ . | quote }}
         {{- end }}
-      secretName: {{ tpl $tlsData.secretName $ }}
+      secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
   rules:
-    {{- range $host := .Values.ingress.spec.hosts }}
-    - host: {{ tpl $host $ }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $.Release.Name }}-gitlab-http
+                name: {{ include "gitlab.fullname" $ }}
                 port:
-                  number: {{ $.Values.services.http.port }}
+                  name: {{ .servicePort }}
+          {{- end }}
     {{- end }}
+{{- end }}
