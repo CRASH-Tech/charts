@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: toolbox
-  namespace: {{ $.Release.namespace }}
+  namespace: {{ $.Release.Namespace }}
 spec:
   selector:
     matchLabels:
