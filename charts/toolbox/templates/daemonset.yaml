@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: toolbox
+  namespace: {{ $.Release.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: toolbox
+  template:
+    metadata:
+      labels:
+        app: toolbox
+    spec:
+      hostNetwork: true
+      hostPID: true
+      hostIPC: true
+      volumes:
+        - name: hosts
+          hostPath:
+            path: /etc/hosts
+            type: File
+        - name: dev
+          hostPath:
+            path: /dev
+            type: Directory
+        - name: sys
+          hostPath:
+            path: /sys
+            type: Directory
+        - name: proc
+          hostPath:
+            path: /proc
+            type: Directory
+        - name: var-local
+          hostPath:
+            path: /var/local
+            type: Directory
+      containers:
+        - name: toolbox
+          image: crashntech/toolbox-pod:1.0.6
+          imagePullPolicy: IfNotPresent
+          #restartPolicy: Always
+          command:
+            - sleep
+            - infinity
+          volumeMounts:
+            - name: hosts
+              mountPath: /etc/hosts
+            - name: dev
+              mountPath: /dev
+            - name: sys
+              mountPath: /sys
+            - name: proc
+              mountPath: /proc
+            - name: var-local
+              mountPath: /var/local
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
+      tolerations:
+        - operator: Exists
+      priorityClassName: system-cluster-critical
+      priority: 2000000000
