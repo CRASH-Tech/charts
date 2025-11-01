@@ -2,10 +2,11 @@
 
 replicaCount: 1
 commonLabels: {}
+namespaceOverride: ""
 
 image:
-  repository: crashntech/local-path-provisioner
-  tag: v0.0.33
+  repository: rancher/local-path-provisioner
+  tag: v0.0.32
   pullPolicy: IfNotPresent
 
 helperImage:
@@ -48,6 +49,9 @@ storageClass:
   ## volumeBindingMode field controls when volume binding and dynamic provisioning should occur, can be  "Immediate" or "WaitForFirstConsumer"
   volumeBindingMode: WaitForFirstConsumer
 
+  ## allowedTopologies field controls on which nodes the volumes can be dynamically provisioned, an empty value means no topology constraints
+  allowedTopologies: []
+
   ## Set a path pattern, if unset the default will be used
   # pathPattern: "{{ .PVC.Namespace }}-{{ .PVC.Name }}"
 
@@ -63,7 +67,10 @@ storageClass:
 # 2. Root directory (/) is prohibited.
 # 3. No duplicate paths allowed for one node.
 # 4. No duplicate node allowed.
-nodePathMap: []
+nodePathMap:
+  - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+    paths:
+      - /opt/local-path-provisioner
 
 # `sharedFileSystemPath` allows the provisioner to use a filesystem that is mounted on all
 # nodes at the same time. In this case all access modes are supported: `ReadWriteOnce`,
@@ -87,8 +94,8 @@ nodePathMap: []
 #     sharedFileSystemPath: ""
 #     ## OR
 #     # See above
-#     nodePathMap: {}
-
+#     nodePathMap: []
+    
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -142,6 +149,9 @@ tolerations: []
 
 affinity: {}
 
+podDisruptionBudget:
+  enabled: false
+
 configmap:
   # specify the config map name
   name: local-path-config
@@ -149,30 +159,7 @@ configmap:
   setup: |-
     #!/bin/sh
     set -eu
-
-    dirpath=$(dirname "$VOL_DIR")
-    fs_required="virtiofs"
-
-    # Find the closest existing parent directory
-    while [ ! -d "$dirpath" ]; do
-        dirpath=$(dirname "$dirpath")
-    done
-
-    # Get mountpoint and fs type
-    mountpoint=$(df "$dirpath" | tail -1 | awk '{print $6}')
-    fstype=$(df -T "$dirpath" | tail -1 | awk '{print $2}')
-
-    # Debug
-    echo "PATH: $VOL_DIR"
-    echo "DIRPATH: $dirpath"
-    echo "FSTYPE: $fstype"
-
-    if [ "$fstype" = "$fs_required" ]; then
-        mkdir -m 0777 "$VOL_DIR"
-    else
-        echo "Error: filesystem is not $fs_required ($fstype)"
-        exit 1
-    fi
+    mkdir -m 0777 -p "$VOL_DIR"
   teardown: |-
     #!/bin/sh
     set -eu
@@ -182,12 +169,15 @@ configmap:
     namespaceOverride: ""
     name: "helper-pod"
     annotations: {}
-
+    tolerations: []
 # Number of provisioner worker threads to call provision/delete simultaneously.
 # workerThreads: 4
 
 # Number of retries of failed volume provisioning. 0 means retry indefinitely.
-provisioningRetryCount: 0
+# provisioningRetryCount: 15
 
 # Number of retries of failed volume deletion. 0 means retry indefinitely.
-deletionRetryCount: 0
+# deletionRetryCount: 15
+
+# Extra arguments to pass to the CLI
+extraArgs: []

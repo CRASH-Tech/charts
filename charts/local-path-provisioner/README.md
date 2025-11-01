@@ -30,7 +30,7 @@ To install the chart with the release name `local-path-storage`:
 ```console
 $ git clone https://github.com/rancher/local-path-provisioner.git
 $ cd local-path-provisioner
-$ helm install ./deploy/chart/local-path-provisioner --name local-path-storage --namespace local-path-storage
+$ helm install local-path-storage --create-namespace --namespace local-path-storage ./deploy/chart/local-path-provisioner/
 ```
 
 The command deploys Local Path Provisioner on the Kubernetes cluster in the default configuration. The
@@ -57,7 +57,7 @@ default values.
 | ----------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `commonLabels`                      | Custom labels to apply to all resources                                         | `{}`                                                                                |
 | `image.repository`                  | Local Path Provisioner image name                                               | `rancher/local-path-provisioner`                                                    |
-| `image.tag`                         | Local Path Provisioner image tag                                                | `v0.0.31` .                                                                         |
+| `image.tag`                         | Local Path Provisioner image tag                                                | `v0.0.32` .                                                                         |
 | `image.pullPolicy`                  | Image pull policy                                                               | `IfNotPresent`                                                                      |
 | `storageClass.create`               | If true, create a `StorageClass`                                                | `true`                                                                              |
 | `storageClass.provisionerName`      | The provisioner name for the storage class                                      | `nil`                                                                               |
@@ -65,6 +65,8 @@ default values.
 | `storageClass.defaultVolumeType`    | The default volume type this storage class creates                              | `hostPath`                                                                          |
 | `storageClass.name`                 | The name to assign the created StorageClass                                     | local-path                                                                          |
 | `storageClass.reclaimPolicy`        | ReclaimPolicy field of the class                                                | Delete                                                                              |
+| `storageClass.volumeBindingMode`    | volumeBindingMode field of the class                                            | `WaitForFirstConsumer`                                                              |
+| `storageClass.allowedTopologies`    | allowedTopologies field of the class                                            | `[]`                                                                                |
 | `storageClass.pathPattern`          | Template for the volume directory name                                          | `nil`                                                                               |
 | `nodePathMap`                       | Configuration of where to store the data on each node                           | `[{node: DEFAULT_PATH_FOR_NON_LISTED_NODES, paths: [/opt/local-path-provisioner]}]` |
 | `resources`                         | Local Path Provisioner resource requests & limits                               | `{}`                                                                                |
